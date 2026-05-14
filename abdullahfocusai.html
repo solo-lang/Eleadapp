@@ -11,61 +11,30 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 :root {
-  /* الخلفيات الأساسية - مشتقة من الهوية الجديدة */
-  --bg: #f8fafc;
-  --bg2: #f1f5f9;
+  --bg: #f5f7fb;
+  --bg2: #eef1f7;
   --card: #ffffff;
-  --surface: #ffffff;
-  --surface-hover: #f1f5f9;
-
-  /* الألوان الأساسية (Indigo) */
-  --primary: #4f46e5;
-  --primary-light: #818cf8;
-  --primary-dark: #3730a3;
-  
-  /* لون التميز (Cyan) */
-  --accent: #06b6d4;
-  --accent2: #0891b2;
-  --accent-soft: rgba(6, 182, 212, 0.10);
-  --accent-border: rgba(6, 182, 212, 0.20);
-
-  /* ألوان الذكاء الاصطناعي - خليتها متناسقة مع الـ Indigo */
-  --ai-color: #8b5cf6; 
-  --ai-soft: rgba(139, 92, 246, 0.10);
-
-  /* النصوص - دقة عالية ووضوح */
+  --primary: #0f172a;
+  --accent: #2563eb;
+  --accent2: #1d4ed8;
+  --accent-soft: rgba(37,99,235,0.10);
+  --accent-border: rgba(37,99,235,0.20);
   --text: #0f172a;
   --text-sub: #475569;
-  --text-secondary: #475569;
   --text-muted: #94a3b8;
-
-  /* الحالة (نجاح، خطر، تحذير) */
-  --success: #10b981;
-  --warning: #f59e0b;
-  --danger: #ef4444;
-
-  /* الحدود والظلال */
   --border: #e2e8f0;
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
-  --shadow: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -1px rgba(0,0,0,0.05);
-  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
-
-  /* الأبعاد والزوايا - اعتمدت القياسات الأكثر عصرية */
+  --danger: #ef4444;
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --shadow-sm: 0 1px 3px rgba(15,23,42,0.06), 0 1px 2px rgba(15,23,42,0.04);
+  --shadow: 0 4px 16px rgba(15,23,42,0.08), 0 2px 6px rgba(15,23,42,0.04);
+  --shadow-lg: 0 12px 40px rgba(15,23,42,0.12), 0 4px 12px rgba(15,23,42,0.06);
   --radius: 16px;
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 20px;
-  --radius-xs: 6px;
-
-  /* إضافات تقنية */
-  --nav-h: 64px;
-  --nav-height: 64px;
-  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  --font-main: 'Tajawal', system-ui, -apple-system, sans-serif;
-  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --radius-sm: 10px;
+  --radius-xs: 7px;
+  --nav-h: 68px;
+  --transition: 0.25s cubic-bezier(0.4,0,0.2,1);
 }
-
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
 html { scroll-behavior: smooth; font-size: 16px; }
 body {
@@ -83,237 +52,14 @@ body {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
-/* ══════════════════════════════════
-   LOGIN SCREEN
-══════════════════════════════════ */
-#login-screen {
-  position: fixed; inset: 0; z-index: 9000;
-  background: linear-gradient(135deg, #0f172a 0%, #1e3a6e 100%);
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  padding: 32px 24px;
-  max-width: 480px; margin: 0 auto;
-}
-#login-screen.hidden { display: none; }
-.login-logo {
-  width: 80px; height: 80px; border-radius: 24px;
-  background: linear-gradient(135deg, #2563eb, #7c3aed);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 36px; margin-bottom: 20px;
-  box-shadow: 0 8px 32px rgba(37,99,235,0.4);
-  animation: logoPulse 3s ease-in-out infinite;
-}
-@keyframes logoPulse {
-  0%,100%{ box-shadow: 0 8px 32px rgba(37,99,235,0.4); }
-  50%{ box-shadow: 0 8px 48px rgba(124,58,237,0.6); }
-}
-.login-title {
-  font-size: 28px; font-weight: 900; color: #fff;
-  text-align: center; margin-bottom: 6px;
-}
-.login-sub { font-size: 14px; color: rgba(255,255,255,0.5); text-align: center; margin-bottom: 36px; }
-
-.login-tabs {
-  display: flex; background: rgba(255,255,255,0.08); border-radius: 12px;
-  padding: 4px; margin-bottom: 24px; width: 100%;
-}
-.login-tab {
-  flex: 1; padding: 10px; text-align: center; border-radius: 8px;
-  font-family: 'Cairo', sans-serif; font-size: 14px; font-weight: 700;
-  color: rgba(255,255,255,0.5); background: none; border: none; cursor: pointer;
-  transition: var(--transition);
-}
-.login-tab.active { background: var(--accent); color: #fff; }
-
-.login-form { width: 100%; display: flex; flex-direction: column; gap: 14px; }
-.login-input {
-  width: 100%; padding: 14px 16px;
-  background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.12);
-  border-radius: var(--radius-sm); color: #fff;
-  font-family: 'Cairo', sans-serif; font-size: 14px;
-  outline: none; transition: var(--transition); text-align: right;
-}
-.login-input:focus { border-color: var(--accent); background: rgba(255,255,255,0.12); }
-.login-input::placeholder { color: rgba(255,255,255,0.35); }
-
-.login-btn {
-  width: 100%; padding: 15px; border-radius: var(--radius-sm);
-  background: linear-gradient(135deg, #2563eb, #7c3aed);
-  color: #fff; font-family: 'Cairo', sans-serif; font-size: 16px; font-weight: 800;
-  border: none; cursor: pointer; transition: var(--transition);
-  box-shadow: 0 4px 20px rgba(37,99,235,0.4);
-}
-.login-btn:active { transform: scale(0.97); opacity: 0.9; }
-
-.login-err {
-  background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3);
-  border-radius: var(--radius-xs); padding: 10px 14px;
-  color: #fca5a5; font-size: 13px; text-align: center; display: none;
-}
-.login-err.show { display: block; }
-
-.login-bypass {
-  margin-top: 16px; text-align: center;
-  font-size: 12px; color: rgba(255,255,255,0.3); cursor: pointer;
-  text-decoration: underline;
-}
-.login-bypass:active { color: rgba(255,255,255,0.6); }
-
-/* ══════════════════════════════════
-   AI BUTTON FLOATING
-══════════════════════════════════ */
-#ai-fab {
-  position: fixed; bottom: calc(var(--nav-h) + 16px); left: 16px;
-  z-index: 500;
-  display: none;
-}
-#ai-fab.visible { display: block; }
-.ai-fab-btn {
-  width: 52px; height: 52px; border-radius: 50%;
-  background: linear-gradient(135deg, #7c3aed, #2563eb);
-  border: none; color: #fff; font-size: 22px;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; box-shadow: 0 4px 20px rgba(124,58,237,0.5);
-  transition: var(--transition); animation: aiFabPulse 3s ease-in-out infinite;
-}
-@keyframes aiFabPulse {
-  0%,100%{ box-shadow: 0 4px 20px rgba(124,58,237,0.5); }
-  50%{ box-shadow: 0 4px 30px rgba(124,58,237,0.8); }
-}
-.ai-fab-btn:active { transform: scale(0.9); }
-
-/* ══════════════════════════════════
-   AI MODAL
-══════════════════════════════════ */
-#modal-ai .modal { max-height: 88vh; }
-.ai-mode-tabs {
-  display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 16px;
-}
-.ai-mode-tab {
-  padding: 7px 12px; border-radius: 20px;
-  background: var(--bg); border: 1.5px solid var(--border);
-  font-family: 'Cairo', sans-serif; font-size: 12px; font-weight: 700;
-  color: var(--text-sub); cursor: pointer; transition: var(--transition);
-  white-space: nowrap;
-}
-.ai-mode-tab.active { background: var(--ai-soft); border-color: var(--ai-color); color: var(--ai-color); }
-
-.ai-chat-history {
-  background: var(--bg); border-radius: var(--radius-sm); border: 1px solid var(--border);
-  padding: 14px; min-height: 120px; max-height: 300px; overflow-y: auto;
-  margin-bottom: 12px; display: flex; flex-direction: column; gap: 10px;
-}
-.ai-chat-history::-webkit-scrollbar { width: 2px; }
-.chat-msg {
-  padding: 10px 13px; border-radius: 12px; font-size: 13px; line-height: 1.7;
-  max-width: 90%;
-}
-.chat-msg.user {
-  background: var(--accent); color: #fff; margin-right: auto;
-  border-radius: 12px 12px 4px 12px;
-}
-.chat-msg.ai {
-  background: var(--card); border: 1px solid var(--border);
-  color: var(--text-sub); margin-left: auto;
-  border-radius: 12px 12px 12px 4px;
-}
-.chat-msg.ai .ai-label {
-  font-size: 10px; font-weight: 700; color: var(--ai-color); margin-bottom: 4px;
-}
-.chat-thinking {
-  display: flex; gap: 5px; align-items: center; padding: 10px 13px;
-  background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-  width: fit-content; margin-left: auto;
-}
-.chat-thinking span {
-  width: 7px; height: 7px; background: var(--ai-color);
-  border-radius: 50%; animation: chatDot 1.2s ease-in-out infinite;
-}
-.chat-thinking span:nth-child(2) { animation-delay: 0.2s; }
-.chat-thinking span:nth-child(3) { animation-delay: 0.4s; }
-@keyframes chatDot {
-  0%,100%{ transform: scale(1); opacity: 0.4; }
-  50%{ transform: scale(1.3); opacity: 1; }
-}
-
-.ai-input-row {
-  display: flex; gap: 8px; align-items: flex-end;
-}
-.ai-textarea {
-  flex: 1; padding: 11px 14px;
-  background: var(--bg); border: 1.5px solid var(--border);
-  border-radius: var(--radius-sm); color: var(--text);
-  font-family: 'Cairo', sans-serif; font-size: 13px;
-  resize: none; min-height: 44px; max-height: 120px; outline: none;
-  transition: var(--transition); line-height: 1.5;
-}
-.ai-textarea:focus { border-color: var(--ai-color); box-shadow: 0 0 0 3px var(--ai-soft); }
-.ai-send-btn {
-  width: 44px; height: 44px; border-radius: var(--radius-sm); flex-shrink: 0;
-  background: linear-gradient(135deg, #7c3aed, #2563eb);
-  border: none; color: #fff; font-size: 16px;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; transition: var(--transition);
-}
-.ai-send-btn:active { transform: scale(0.93); }
-.ai-send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-
-.ai-quick-btns {
-  display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px;
-}
-.ai-quick-btn {
-  padding: 6px 12px; border-radius: 20px;
-  background: var(--bg); border: 1px solid var(--border);
-  font-family: 'Cairo', sans-serif; font-size: 11px; font-weight: 700;
-  color: var(--text-sub); cursor: pointer; transition: var(--transition);
-}
-.ai-quick-btn:active { background: var(--ai-soft); border-color: var(--ai-color); color: var(--ai-color); }
-
-/* AI suggestion card on dashboard */
-.ai-dash-card {
-  background: linear-gradient(135deg, rgba(124,58,237,0.06), rgba(37,99,235,0.06));
-  border: 1.5px solid rgba(124,58,237,0.15);
-  border-radius: var(--radius); padding: 16px; margin-bottom: 10px;
-  position: relative; overflow: hidden;
-}
-.ai-dash-card::before {
-  content:''; position: absolute; top: -20px; left: -20px;
-  width: 80px; height: 80px;
-  background: radial-gradient(circle, rgba(124,58,237,0.15), transparent 70%);
-}
-.ai-dash-label {
-  font-size: 10px; font-weight: 700; color: var(--ai-color);
-  text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;
-  display: flex; align-items: center; gap: 6px;
-}
-.ai-dash-text {
-  font-size: 13px; color: var(--text-sub); line-height: 1.7;
-}
-.ai-dash-btn {
-  margin-top: 10px; padding: 8px 14px; border-radius: 20px;
-  background: var(--ai-soft); border: 1px solid rgba(124,58,237,0.2);
-  color: var(--ai-color); font-family: 'Cairo', sans-serif; font-size: 12px;
-  font-weight: 700; cursor: pointer; transition: var(--transition);
-  display: inline-flex; align-items: center; gap: 6px;
-}
-.ai-dash-btn:active { background: rgba(124,58,237,0.15); }
-
-/* AI controlled indicator */
-.ai-badge {
-  display: inline-flex; align-items: center; gap: 4px;
-  padding: 2px 8px; border-radius: 10px;
-  background: var(--ai-soft); color: var(--ai-color);
-  font-size: 10px; font-weight: 700;
-}
-
-/* ══════════════════════════════════
-   ORIGINAL STYLES (preserved)
-══════════════════════════════════ */
+/* ── LAYOUT ── */
 #app {
   min-height: 100vh;
   padding-bottom: var(--nav-h);
   position: relative;
 }
+
+/* ── BOTTOM NAV ── */
 #bottom-nav {
   position: fixed;
   bottom: 0; left: 50%; 
@@ -351,12 +97,16 @@ body {
   background: var(--accent);
   border-radius: 0 0 4px 4px;
 }
+
+/* ── PAGES ── */
 .page { display: none; animation: fadeUp 0.3s ease; }
 .page.active { display: block; }
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* ── HEADER ── */
 .page-header {
   background: var(--card);
   padding: 20px 20px 16px;
@@ -369,6 +119,8 @@ body {
 }
 .page-title { font-size: 20px; font-weight: 900; color: var(--primary); }
 .page-sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+/* ── CARDS ── */
 .card {
   background: var(--card);
   border-radius: var(--radius);
@@ -387,6 +139,8 @@ body {
   font-size: 14px; font-weight: 700;
   color: var(--primary); margin-bottom: 4px;
 }
+
+/* ── BUTTONS ── */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   padding: 11px 20px; border-radius: var(--radius-sm);
@@ -395,12 +149,15 @@ body {
   text-decoration: none; white-space: nowrap;
 }
 .btn-primary {
-  background: var(--accent); color: #fff;
+  background: var(--accent);
+  color: #fff;
   box-shadow: 0 4px 14px rgba(37,99,235,0.30);
 }
 .btn-primary:active { background: var(--accent2); box-shadow: none; transform: scale(0.98); }
 .btn-ghost {
-  background: transparent; border: 1.5px solid var(--border); color: var(--text-sub);
+  background: transparent;
+  border: 1.5px solid var(--border);
+  color: var(--text-sub);
 }
 .btn-ghost:active { background: var(--bg); }
 .btn-danger { background: rgba(239,68,68,0.08); border: 1.5px solid rgba(239,68,68,0.2); color: var(--danger); }
@@ -422,6 +179,8 @@ body {
   transition: all var(--transition);
 }
 .btn-fab:active { transform: scale(0.95); box-shadow: none; }
+
+/* ── FORM ── */
 .form-group { margin-bottom: 14px; }
 .form-label { display: block; font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 6px; }
 .form-input {
@@ -435,13 +194,14 @@ body {
 .form-input::placeholder { color: var(--text-muted); }
 textarea.form-input { resize: vertical; min-height: 90px; line-height: 1.6; }
 select.form-input { cursor: pointer; }
+
+/* ── MODAL ── */
 .modal-overlay {
   position: fixed; inset: 0; z-index: 1000;
   background: rgba(15,23,42,0.5); backdrop-filter: blur(4px);
   display: flex; align-items: flex-end; justify-content: center;
   opacity: 0; pointer-events: none;
   transition: opacity 0.25s;
-  max-width: 480px; margin: 0 auto;
 }
 .modal-overlay.open { opacity: 1; pointer-events: all; }
 .modal {
@@ -468,6 +228,8 @@ select.form-input { cursor: pointer; }
 .modal-close { background: var(--bg); border: none; color: var(--text-muted); font-size: 16px; cursor: pointer; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 .modal-actions { display: flex; gap: 10px; margin-top: 18px; }
 .modal-actions .btn { flex: 1; justify-content: center; }
+
+/* ── BADGE ── */
 .badge {
   display: inline-flex; align-items: center;
   padding: 3px 9px; border-radius: 20px;
@@ -479,9 +241,13 @@ select.form-input { cursor: pointer; }
 .badge-done { background: rgba(34,197,94,0.1); color: #16a34a; }
 .badge-in_progress { background: rgba(37,99,235,0.1); color: var(--accent); }
 .badge-not_started { background: var(--bg2); color: var(--text-muted); }
+
+/* ── PROGRESS ── */
 .progress-bar { height: 6px; background: var(--bg2); border-radius: 3px; overflow: hidden; }
 .progress-fill { height: 100%; background: var(--accent); border-radius: 3px; transition: width 0.6s cubic-bezier(0.4,0,0.2,1); }
 .progress-fill.success { background: var(--success); }
+
+/* ── TOAST ── */
 #toast-container { position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 9999; display: flex; flex-direction: column; gap: 8px; pointer-events: none; width: 90%; max-width: 360px; }
 .toast {
   background: var(--primary);
@@ -495,8 +261,9 @@ select.form-input { cursor: pointer; }
 }
 .toast.success { background: #16a34a; }
 .toast.error { background: var(--danger); }
-.toast.ai { background: var(--ai-color); }
 @keyframes toastIn { from { opacity:0; transform: translateY(-10px) scale(0.95); } to { opacity:1; transform: translateY(0) scale(1); } }
+
+/* ── COIN ANIMATION ── */
 @keyframes coinPop {
   0% { opacity:0; transform: translateY(0) scale(0.5); }
   50% { opacity:1; transform: translateY(-70px) scale(1.3); }
@@ -504,7 +271,10 @@ select.form-input { cursor: pointer; }
 }
 .coin-pop { position: fixed; pointer-events: none; z-index: 9999; font-size: 28px; animation: coinPop 1.2s ease forwards; }
 
-/* DASHBOARD */
+/* ═══════════════════════════════════
+   DASHBOARD PAGE
+═══════════════════════════════════ */
+#page-dashboard { }
 .dash-hero {
   background: linear-gradient(135deg, var(--primary) 0%, #1e3a6e 100%);
   padding: 28px 20px 80px;
@@ -525,7 +295,9 @@ select.form-input { cursor: pointer; }
 .hero-greeting { font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 4px; }
 .hero-name { font-size: 26px; font-weight: 900; color: #fff; }
 .hero-date { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 3px; }
-.hero-pills { display: flex; gap: 10px; margin-top: 18px; }
+.hero-pills {
+  display: flex; gap: 10px; margin-top: 18px;
+}
 .hero-pill {
   background: rgba(255,255,255,0.12);
   border: 1px solid rgba(255,255,255,0.15);
@@ -535,17 +307,14 @@ select.form-input { cursor: pointer; }
   font-size: 12px; font-weight: 700; color: #fff;
 }
 .hero-pill i { font-size: 12px; color: rgba(255,255,255,0.7); }
-.hero-ai-btn {
-  margin-right: auto;
-  background: linear-gradient(135deg, rgba(124,58,237,0.5), rgba(37,99,235,0.5));
-  border: 1px solid rgba(124,58,237,0.4);
-  border-radius: 20px; padding: 6px 14px;
-  display: flex; align-items: center; gap: 6px;
-  font-size: 12px; font-weight: 700; color: #fff;
-  cursor: pointer;
+.dash-cards-pull {
+  margin-top: -52px;
+  padding: 0 16px;
 }
-.dash-cards-pull { margin-top: -52px; padding: 0 16px; }
-.dash-stats-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; margin-bottom: 14px; }
+.dash-stats-grid {
+  display: grid; grid-template-columns: repeat(2,1fr); gap: 10px;
+  margin-bottom: 14px;
+}
 .stat-card {
   background: var(--card);
   border-radius: var(--radius);
@@ -554,194 +323,423 @@ select.form-input { cursor: pointer; }
   box-shadow: var(--shadow);
   position: relative; overflow: hidden;
 }
-.stat-card-accent { position: absolute; top: 0; right: 0; width: 48px; height: 48px; border-radius: 0 var(--radius) 0 100%; }
-.stat-icon-wrap { width: 36px; height: 36px; border-radius: var(--radius-xs); display: flex; align-items: center; justify-content: center; font-size: 16px; margin-bottom: 10px; }
+.stat-card-accent {
+  position: absolute; top: 0; right: 0;
+  width: 48px; height: 48px;
+  border-radius: 0 var(--radius) 0 100%;
+}
+.stat-icon-wrap {
+  width: 36px; height: 36px; border-radius: var(--radius-xs);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; margin-bottom: 10px;
+}
 .stat-val { font-size: 26px; font-weight: 900; color: var(--primary); line-height: 1; }
 .stat-label { font-size: 11px; color: var(--text-muted); margin-top: 3px; font-weight: 600; }
+
 .dash-section { padding: 0 16px; margin-bottom: 14px; }
-.dash-section-title { font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; }
+.dash-section-title {
+  font-size: 13px; font-weight: 700; color: var(--primary);
+  margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between;
+}
 .dash-section-link { font-size: 11px; color: var(--accent); font-weight: 600; }
-.goal-card { background: var(--card); border-radius: var(--radius); padding: 18px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); margin-bottom: 10px; }
-.goal-pct-row { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 10px; }
+
+/* weekly goal card */
+.goal-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 18px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 10px;
+}
+.goal-pct-row {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: 10px;
+}
 .goal-pct { font-size: 32px; font-weight: 900; color: var(--accent); line-height: 1; }
 .goal-detail { font-size: 11px; color: var(--text-muted); font-weight: 600; text-align: left; }
-.sugg-card { background: var(--card); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; box-shadow: var(--shadow-sm); }
-.sugg-item { display: flex; align-items: flex-start; gap: 10px; padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text-sub); }
+
+/* suggestions */
+.sugg-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.sugg-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px; color: var(--text-sub);
+}
 .sugg-item:last-child { border-bottom: none; }
-.sugg-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; margin-top: 6px; }
+.sugg-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent); flex-shrink: 0; margin-top: 6px;
+}
+
+/* heatmap */
 .heatmap-grid { display: flex; flex-wrap: wrap; gap: 3px; }
-.heatmap-cell { width: 12px; height: 12px; border-radius: 3px; background: var(--bg2); transition: transform 0.15s; }
+.heatmap-cell {
+  width: 12px; height: 12px; border-radius: 3px;
+  background: var(--bg2);
+  transition: transform 0.15s;
+}
 .heatmap-cell:active { transform: scale(1.4); z-index: 10; }
 .heatmap-cell[data-level="1"] { background: rgba(37,99,235,0.2); }
 .heatmap-cell[data-level="2"] { background: rgba(37,99,235,0.45); }
 .heatmap-cell[data-level="3"] { background: rgba(37,99,235,0.70); }
 .heatmap-cell[data-level="4"] { background: var(--accent); }
-.session-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+
+/* recent sessions */
+.session-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
 .session-row:last-child { border-bottom: none; }
 .session-subject { font-weight: 600; color: var(--text); }
 .session-meta { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
 .session-duration { font-size: 13px; font-weight: 700; color: var(--accent); }
 
-/* SUBJECTS */
+/* ═══════════════════════════════════
+   SUBJECTS PAGE
+═══════════════════════════════════ */
 #page-subjects .content { padding: 16px; }
 .subjects-toolbar { display: flex; gap: 10px; margin-bottom: 16px; }
 .subjects-list { display: flex; flex-direction: column; gap: 10px; }
-.subject-card { background: var(--card); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; box-shadow: var(--shadow-sm); }
-.subject-header { display: flex; align-items: center; gap: 12px; padding: 14px 16px; cursor: pointer; }
-.subject-header:active { background: var(--bg); }
-.subject-color-bar { width: 4px; height: 40px; border-radius: 2px; flex-shrink: 0; }
+
+.subject-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.subject-header {
+  padding: 14px 16px;
+  display: flex; align-items: center; gap: 12px;
+  cursor: pointer;
+}
+.subject-color-bar {
+  width: 4px; height: 36px; border-radius: 2px; flex-shrink: 0;
+}
 .subject-info { flex: 1; min-width: 0; }
 .subject-name { font-size: 15px; font-weight: 700; color: var(--primary); }
-.subject-meta { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
-.subject-progress-wrap { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
-.subject-pct { font-size: 13px; font-weight: 700; color: var(--accent); }
+.subject-meta { font-size: 11px; color: var(--text-muted); margin-top: 1px; }
+.subject-progress-wrap { min-width: 60px; text-align: left; }
+.subject-pct { font-size: 13px; font-weight: 700; color: var(--accent); text-align: left; margin-bottom: 4px; }
 .subject-actions { display: flex; gap: 4px; }
-.lessons-container { display: none; border-top: 1px solid var(--border); background: var(--bg); }
+
+.lessons-container {
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+  padding: 10px 16px;
+  display: none;
+}
 .lessons-container.open { display: block; }
-.lessons-list { padding: 10px 16px; display: flex; flex-direction: column; gap: 8px; }
-.lesson-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--card); border-radius: var(--radius-sm); border: 1px solid var(--border); }
-.lesson-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.lessons-list { display: flex; flex-direction: column; gap: 6px; }
+.lesson-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px;
+  background: var(--card);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+.lesson-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  background: var(--text-muted);
+}
 .lesson-dot.done { background: var(--success); }
 .lesson-dot.in_progress { background: var(--accent); }
 .lesson-dot.not_started { background: var(--border); }
 .lesson-info { flex: 1; min-width: 0; }
-.lesson-name { font-size: 13px; font-weight: 600; color: var(--primary); }
-.lesson-badges { display: flex; gap: 4px; margin-top: 3px; }
+.lesson-name { font-size: 13px; font-weight: 600; color: var(--text); }
+.lesson-badges { display: flex; gap: 4px; margin-top: 3px; flex-wrap: wrap; }
 .lesson-actions { display: flex; gap: 4px; }
-.color-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-.color-swatch { width: 28px; height: 28px; border-radius: 50%; cursor: pointer; transition: all 0.2s; border: 2px solid transparent; }
-.color-swatch.selected { border-color: #fff; box-shadow: 0 0 0 2px var(--primary); transform: scale(1.15); }
 
-/* STUDY / TIMER */
-.quick-start-card { background: var(--card); border-radius: var(--radius); padding: 16px; border: 1px solid var(--border); margin-bottom: 14px; }
+/* color picker */
+.color-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+.color-swatch {
+  width: 28px; height: 28px; border-radius: 50%;
+  cursor: pointer; border: 2px solid transparent;
+  transition: all 0.15s; box-shadow: var(--shadow-sm);
+}
+.color-swatch.selected { border-color: var(--primary); transform: scale(1.15); }
+
+/* ═══════════════════════════════════
+   STUDY / TIMER PAGE
+═══════════════════════════════════ */
+#page-study .content { padding: 16px; }
+
+/* Quick start */
+.quick-start-card {
+  background: var(--card); border-radius: var(--radius);
+  border: 1px solid var(--border); padding: 16px;
+  box-shadow: var(--shadow-sm); margin-bottom: 14px;
+}
 .quick-selects { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
-.timer-card { background: var(--card); border-radius: var(--radius); padding: 20px 16px; border: 1px solid var(--border); margin-bottom: 14px; }
-.timer-mode-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
-.timer-mode-tab { padding: 7px 12px; border-radius: 20px; background: var(--bg); border: 1.5px solid var(--border); font-family: 'Cairo', sans-serif; font-size: 12px; font-weight: 700; color: var(--text-sub); cursor: pointer; transition: all var(--transition); }
-.timer-mode-tab.active { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 2px 10px rgba(37,99,235,0.3); }
-.timer-ring-wrap { position: relative; width: 180px; height: 180px; margin: 0 auto 16px; }
+
+/* Timer card */
+.timer-card {
+  background: var(--card); border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 20px 16px; text-align: center;
+}
+
+/* Mode tabs */
+.timer-mode-tabs {
+  display: flex; gap: 6px; justify-content: center;
+  margin-bottom: 20px; flex-wrap: wrap;
+}
+.timer-mode-tab {
+  padding: 7px 14px; border-radius: 20px;
+  font-family: 'Cairo', sans-serif; font-size: 12px; font-weight: 700;
+  cursor: pointer; border: 1.5px solid var(--border);
+  background: transparent; color: var(--text-sub);
+  transition: all var(--transition);
+}
+.timer-mode-tab.active {
+  background: var(--accent); color: #fff; border-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(37,99,235,0.25);
+}
+
+/* SVG ring */
+.timer-ring-wrap {
+  position: relative; width: 180px; height: 180px;
+  margin: 0 auto 20px;
+}
 .timer-svg { width: 180px; height: 180px; transform: rotate(-90deg); }
 .timer-ring-bg { fill: none; stroke: var(--bg2); }
-.timer-ring-progress { fill: none; stroke: var(--accent); stroke-linecap: round; transition: stroke-dashoffset 0.5s linear; }
-.timer-ring-progress.break-phase { stroke: var(--success); }
-.timer-display { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.timer-digits { font-size: 44px; font-weight: 900; color: var(--primary); font-variant-numeric: tabular-nums; letter-spacing: -2px; }
-.timer-phase-label { font-size: 11px; color: var(--text-muted); font-weight: 600; margin-top: 4px; }
-.pomo-dots { display: flex; gap: 8px; justify-content: center; margin-bottom: 20px; }
-.pomo-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--bg2); border: 1.5px solid var(--border); transition: all var(--transition); }
-.pomo-dot.done { background: var(--accent); border-color: var(--accent); }
-.pomo-dot.active { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-.timer-btns { display: flex; gap: 12px; align-items: center; justify-content: center; margin-bottom: 16px; }
-.timer-btn-main { width: 64px; height: 64px; border-radius: 50%; background: var(--accent); color: #fff; border: none; font-size: 24px; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 20px rgba(37,99,235,0.35); transition: all var(--transition); }
-.timer-btn-main:active { transform: scale(0.93); box-shadow: none; }
-.timer-btn-secondary { width: 44px; height: 44px; border-radius: 50%; background: var(--bg); border: 1.5px solid var(--border); color: var(--text-sub); font-size: 16px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all var(--transition); }
-.timer-btn-secondary:active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
-.timer-session-info { font-size: 12px; color: var(--text-muted); text-align: center; font-weight: 600; padding: 10px; background: var(--bg); border-radius: var(--radius-xs); }
-
-/* ZEN */
-#zen-mode {
-  position: fixed; inset: 0; z-index: 5000;
-  background: #050d1a;
-  display: none; flex-direction: column; align-items: center; justify-content: center;
-  max-width: 480px; margin: 0 auto;
+.timer-ring-progress {
+  fill: none; stroke: var(--accent);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s linear, stroke 0.3s;
 }
-#zen-mode.active { display: flex; }
-.zen-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at center, #0f2040 0%, #050d1a 70%); }
+.timer-ring-progress.break-phase { stroke: var(--success); }
+.timer-display {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.timer-digits {
+  font-size: 36px; font-weight: 900; color: var(--primary);
+  font-variant-numeric: tabular-nums; letter-spacing: -1px;
+}
+.timer-phase-label { font-size: 11px; color: var(--text-muted); font-weight: 600; margin-top: 3px; }
+
+/* Pomo dots */
+.pomo-dots { display: flex; gap: 6px; justify-content: center; margin-bottom: 18px; }
+.pomo-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--border); transition: all 0.3s;
+}
+.pomo-dot.done { background: var(--success); }
+.pomo-dot.active { background: var(--accent); transform: scale(1.3); }
+
+/* Timer buttons */
+.timer-btns {
+  display: flex; align-items: center; justify-content: center; gap: 14px;
+  margin-bottom: 16px;
+}
+.timer-btn-secondary {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--bg); border: 1.5px solid var(--border);
+  color: var(--text-sub); font-size: 17px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all var(--transition);
+}
+.timer-btn-secondary:active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
+.timer-btn-main {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: var(--accent); color: #fff; border: none;
+  font-size: 22px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; box-shadow: 0 4px 20px rgba(37,99,235,0.35);
+  transition: all var(--transition);
+}
+.timer-btn-main:active { transform: scale(0.95); box-shadow: none; }
+.timer-session-info {
+  font-size: 12px; color: var(--text-muted);
+  text-align: center; padding: 0 12px;
+}
+
+/* ═══════════════════════════════════
+   ZEN MODE
+═══════════════════════════════════ */
+#zen-mode {
+  display: none; position: fixed; inset: 0; z-index: 2000;
+  overflow: hidden;
+}
+#zen-mode.active { display: flex; align-items: center; justify-content: center; flex-direction: column; }
+.zen-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, #020c1b 0%, #0a192f 40%, #0d2146 100%);
+  animation: zenBg 8s ease-in-out infinite alternate;
+}
+@keyframes zenBg {
+  0% { background: linear-gradient(135deg, #020c1b 0%, #0a192f 40%, #0d2146 100%); }
+  50% { background: linear-gradient(135deg, #030d20 0%, #0c1f3f 40%, #112255 100%); }
+  100% { background: linear-gradient(135deg, #020c1b 0%, #091626 40%, #0d1e3d 100%); }
+}
 .zen-stars {
   position: absolute; inset: 0;
-  background-image: radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.4) 0%, transparent 100%), radial-gradient(1px 1px at 80% 10%, rgba(255,255,255,0.3) 0%, transparent 100%), radial-gradient(2px 2px at 40% 70%, rgba(255,255,255,0.25) 0%, transparent 100%), radial-gradient(1px 1px at 90% 50%, rgba(255,255,255,0.2) 0%, transparent 100%), radial-gradient(2px 2px at 65% 65%, rgba(255,255,255,0.15) 0%, transparent 100%);
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 30% 60%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 50% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 80%, rgba(255,255,255,0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 40%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 15% 75%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 55% 45%, rgba(255,255,255,0.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 80% 15%, rgba(255,255,255,0.25) 0%, transparent 100%),
+    radial-gradient(2px 2px at 25% 35%, rgba(255,255,255,0.2) 0%, transparent 100%),
+    radial-gradient(2px 2px at 65% 65%, rgba(255,255,255,0.15) 0%, transparent 100%);
   animation: starsTwinkle 6s ease-in-out infinite alternate;
 }
 @keyframes starsTwinkle { 0%,100% { opacity:0.6; } 50% { opacity:1; } }
-.zen-content { position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; padding: 0 32px; text-align: center; }
+.zen-content {
+  position: relative; z-index: 10;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 0 32px; text-align: center;
+}
 .zen-lesson { font-size: 14px; color: rgba(255,255,255,0.5); margin-bottom: 16px; letter-spacing: 1px; }
-.zen-timer { font-size: 76px; font-weight: 900; color: #fff; font-variant-numeric: tabular-nums; text-shadow: 0 0 40px rgba(37,99,235,0.6); margin-bottom: 8px; letter-spacing: -3px; }
+.zen-timer {
+  font-size: 76px; font-weight: 900; color: #fff;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 40px rgba(37,99,235,0.6);
+  margin-bottom: 8px; letter-spacing: -3px;
+}
 .zen-phase { font-size: 12px; color: rgba(255,255,255,0.4); margin-bottom: 40px; }
-.zen-quote { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.8; max-width: 300px; font-style: italic; }
-.zen-exit { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 20px; padding: 10px 24px; font-family: 'Cairo', sans-serif; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.6); cursor: pointer; transition: all var(--transition); z-index: 10; }
+.zen-quote {
+  font-size: 14px; color: rgba(255,255,255,0.55);
+  line-height: 1.8; max-width: 300px;
+  font-style: italic;
+}
+.zen-exit {
+  position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 20px;
+  padding: 10px 24px;
+  font-family: 'Cairo', sans-serif; font-size: 12px; font-weight: 600;
+  color: rgba(255,255,255,0.6); cursor: pointer;
+  transition: all var(--transition);
+  z-index: 10;
+}
 .zen-exit:active { background: rgba(255,255,255,0.15); color: #fff; }
 
-/* NOTES */
+/* ═══════════════════════════════════
+   NOTES PAGE
+═══════════════════════════════════ */
 #page-notes .content { padding: 16px; }
 .notes-toolbar { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
 .notes-search-row { display: flex; gap: 8px; }
 .notes-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; }
-.note-card { background: var(--card); border-radius: var(--radius-sm); border: 1px solid var(--border); padding: 14px; cursor: pointer; transition: all var(--transition); position: relative; overflow: hidden; }
+.note-card {
+  background: var(--card); border-radius: var(--radius-sm);
+  border: 1px solid var(--border); padding: 14px;
+  cursor: pointer; transition: all var(--transition);
+  position: relative; overflow: hidden;
+}
 .note-card:active { transform: scale(0.97); box-shadow: var(--shadow); }
 .note-card-title { font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
-.note-subject-tag { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: var(--accent-soft); color: var(--accent); display: inline-block; margin-bottom: 8px; }
-.note-preview { font-size: 11px; color: var(--text-muted); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.note-subject-tag {
+  font-size: 10px; font-weight: 700;
+  padding: 2px 8px; border-radius: 10px;
+  background: var(--accent-soft); color: var(--accent);
+  display: inline-block; margin-bottom: 8px;
+}
+.note-preview {
+  font-size: 11px; color: var(--text-muted); line-height: 1.5;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+}
 .note-date { font-size: 10px; color: var(--text-muted); margin-top: 8px; }
-.note-del-btn { position: absolute; top: 8px; left: 8px; background: none; border: none; color: transparent; font-size: 12px; cursor: pointer; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: all 0.15s; }
-.note-card:hover .note-del-btn, .note-card:active .note-del-btn { color: var(--danger); background: rgba(239,68,68,0.08); }
+.note-del-btn {
+  position: absolute; top: 8px; left: 8px;
+  background: none; border: none; color: transparent;
+  font-size: 12px; cursor: pointer; width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; transition: all 0.15s;
+}
+.note-card:hover .note-del-btn,
+.note-card:active .note-del-btn { color: var(--danger); background: rgba(239,68,68,0.08); }
 
-/* REPORTS */
+/* ═══════════════════════════════════
+   REPORTS PAGE
+═══════════════════════════════════ */
 #page-reports .content { padding: 16px; }
 .report-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
 .report-section { margin-bottom: 16px; }
-.report-section-title { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.report-section-title {
+  font-size: 12px; font-weight: 700; color: var(--text-muted);
+  text-transform: uppercase; letter-spacing: 1px;
+  margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+}
 .report-section-title i { color: var(--accent); }
 .sessions-table { width: 100%; border-collapse: collapse; }
-.sessions-table th { font-size: 10px; font-weight: 700; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: right; }
+.sessions-table th {
+  font-size: 10px; font-weight: 700; color: var(--text-muted);
+  letter-spacing: 1px; text-transform: uppercase;
+  padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: right;
+}
 .sessions-table td { padding: 10px; font-size: 12px; border-bottom: 1px solid var(--border); }
 .sessions-table tr:last-child td { border-bottom: none; }
 
-/* SETTINGS */
+/* ═══════════════════════════════════
+   SETTINGS PAGE
+═══════════════════════════════════ */
 #page-settings .content { padding: 16px; }
 .settings-section { margin-bottom: 20px; }
-.settings-section-title { font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px; }
-.setting-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 8px; }
+.settings-section-title {
+  font-size: 11px; font-weight: 700; color: var(--text-muted);
+  letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px;
+}
+.setting-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 16px; background: var(--card);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+}
 .setting-label { font-size: 14px; font-weight: 600; color: var(--text); }
 .setting-desc { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+/* toggle */
 .toggle { position: relative; width: 46px; height: 26px; flex-shrink: 0; }
 .toggle input { opacity:0; width:0; height:0; }
-.toggle-track { position: absolute; inset: 0; background: var(--bg2); border-radius: 13px; cursor: pointer; transition: background var(--transition); border: 1.5px solid var(--border); }
+.toggle-track {
+  position: absolute; inset: 0; background: var(--bg2);
+  border-radius: 13px; cursor: pointer; transition: background var(--transition);
+  border: 1.5px solid var(--border);
+}
 .toggle input:checked + .toggle-track { background: var(--accent); border-color: var(--accent); }
-.toggle-track::after { content:''; position:absolute; width:20px; height:20px; background:#fff; border-radius:50%; top:2px; right:2px; transition: transform var(--transition); box-shadow: 0 1px 4px rgba(0,0,0,0.15); }
+.toggle-track::after {
+  content:''; position:absolute; width:20px; height:20px;
+  background:#fff; border-radius:50%; top:2px; right:2px;
+  transition: transform var(--transition);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.15);
+}
 .toggle input:checked + .toggle-track::after { transform: translateX(-20px); }
 
-/* EMPTY */
-.empty-state { text-align: center; padding: 56px 24px; color: var(--text-muted); }
+/* ═══════════════════════════════════
+   EMPTY STATE
+═══════════════════════════════════ */
+.empty-state {
+  text-align: center; padding: 56px 24px;
+  color: var(--text-muted);
+}
 .empty-icon { font-size: 48px; margin-bottom: 14px; opacity: 0.4; }
 .empty-text { font-size: 14px; font-weight: 600; color: var(--text-muted); }
 .empty-sub { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
 
+/* share card */
 #share-card-container { position:fixed; top:-9999px; left:-9999px; width:600px; }
 #share-card { width:600px; background:#0f172a; padding:40px; font-family:'Cairo',sans-serif; }
 </style>
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
-<div id="login-screen">
-  <div class="login-logo">📚</div>
-  <div class="login-title">Abdullah Focus</div>
-  <div class="login-sub">منظم المذاكرة الذكي بالذكاء الاصطناعي</div>
-
-  <div class="login-tabs">
-    <button class="login-tab active" id="tab-login" onclick="Auth.switchTab('login')">دخول</button>
-    <button class="login-tab" id="tab-register" onclick="Auth.switchTab('register')">حساب جديد</button>
-  </div>
-
-  <div class="login-err" id="login-err">خطأ في البيانات</div>
-
-  <div id="form-login" class="login-form">
-    <input type="text" id="inp-login-user" class="login-input" placeholder="اسم المستخدم">
-    <input type="password" id="inp-login-pass" class="login-input" placeholder="كلمة المرور">
-    <button class="login-btn" onclick="Auth.login()">دخول ✨</button>
-  </div>
-
-  <div id="form-register" class="login-form" style="display:none">
-    <input type="text" id="inp-reg-name" class="login-input" placeholder="اسمك (مثال: عبدالله)">
-    <input type="text" id="inp-reg-user" class="login-input" placeholder="اسم المستخدم">
-    <input type="password" id="inp-reg-pass" class="login-input" placeholder="كلمة المرور (6 أحرف+)">
-    <button class="login-btn" onclick="Auth.register()">إنشاء حساب 🚀</button>
-  </div>
-
-  <div class="login-bypass" onclick="Auth.bypass()">تخطي الدخول للتجربة</div>
-</div>
-
-<!-- TOAST -->
 <div id="toast-container"></div>
 
 <!-- ZEN MODE -->
@@ -887,50 +885,6 @@ select.form-input { cursor: pointer; }
   </div>
 </div>
 
-<!-- MODAL: AI ASSISTANT -->
-<div class="modal-overlay" id="modal-ai">
-  <div class="modal">
-    <div class="modal-handle"></div>
-    <div class="modal-header">
-      <div>
-        <div class="modal-title" style="margin-bottom:4px;">🤖 المساعد الذكي</div>
-        <div class="ai-badge"><i class="fa fa-robot" style="font-size:9px;"></i> Groq AI</div>
-      </div>
-      <button class="modal-close" onclick="UIManager.closeModal('modal-ai')"><i class="fa fa-times"></i></button>
-    </div>
-
-    <div class="ai-mode-tabs">
-      <button class="ai-mode-tab active" onclick="AIManager.setMode('chat', this)">💬 محادثة</button>
-      <button class="ai-mode-tab" onclick="AIManager.setMode('explain', this)">📖 شرح</button>
-      <button class="ai-mode-tab" onclick="AIManager.setMode('summarize', this)">📝 تلخيص</button>
-      <button class="ai-mode-tab" onclick="AIManager.setMode('quiz', this)">🧠 اختبار</button>
-      <button class="ai-mode-tab" onclick="AIManager.setMode('plan', this)">📅 خطة</button>
-    </div>
-
-    <div class="ai-chat-history" id="ai-chat-history">
-      <div class="chat-msg ai">
-        <div class="ai-label">🤖 Groq AI</div>
-        مرحباً! أنا مساعدك الذكي. كيف يمكنني مساعدتك في المذاكرة اليوم؟ 😊
-      </div>
-    </div>
-
-    <div class="ai-input-row">
-      <textarea class="ai-textarea" id="ai-inp" placeholder="اسألني أي شيء..." rows="2"
-        onkeydown="if(event.key==='Enter' && !event.shiftKey){event.preventDefault();AIManager.send();}"></textarea>
-      <button class="ai-send-btn" id="ai-send-btn" onclick="AIManager.send()">
-        <i class="fa fa-paper-plane"></i>
-      </button>
-    </div>
-
-    <div class="ai-quick-btns" id="ai-quick-btns">
-      <button class="ai-quick-btn" onclick="AIManager.quickAsk('ماذا أذاكر الآن؟')">ماذا أذاكر؟</button>
-      <button class="ai-quick-btn" onclick="AIManager.quickAsk('اعطني خطة مذاكرة اليوم')">خطة اليوم</button>
-      <button class="ai-quick-btn" onclick="AIManager.quickAsk('كيف أحسن تركيزي؟')">تحسين التركيز</button>
-      <button class="ai-quick-btn" onclick="AIManager.quickAsk('ما المادة الأصعب التي تحتاج اهتمام؟')">أصعب مادة</button>
-    </div>
-  </div>
-</div>
-
 <!-- SHARE CARD (hidden) -->
 <div id="share-card-container">
   <div id="share-card">
@@ -943,25 +897,30 @@ select.form-input { cursor: pointer; }
     </div>
     <div id="share-card-body" style="font-family:Cairo,sans-serif;color:#e2e8f0;"></div>
     <div style="margin-top:24px;padding-top:16px;border-top:1px solid rgba(37,99,235,0.2);font-size:10px;color:#475569;font-family:Cairo,sans-serif;">
-      تم الإنشاء بواسطة Abdullah Focus + Groq AI
+      تم الإنشاء بواسطة Abdullah Focus
     </div>
   </div>
 </div>
 
 <!-- APP -->
-<div id="app" style="display:none">
+<div id="app">
 
   <!-- DASHBOARD -->
   <div class="page active" id="page-dashboard">
     <div class="dash-hero">
       <div class="hero-greeting">مرحباً 👋</div>
-      <div class="hero-name" id="hero-display-name">عبدالله</div>
+      <div class="hero-name">عبدالله</div>
       <div class="hero-date" id="welcome-date"></div>
       <div class="hero-pills">
-        <div class="hero-pill"><i class="fa fa-fire"></i><span id="hero-streak">0</span><span>يوم</span></div>
-        <div class="hero-pill"><i class="fa fa-coins"></i><span id="hero-coins">0</span><span>عملة</span></div>
-        <div class="hero-ai-btn" onclick="UIManager.openModal('modal-ai')">
-          <i class="fa fa-robot" style="font-size:11px;"></i> اسأل AI
+        <div class="hero-pill">
+          <i class="fa fa-fire"></i>
+          <span id="hero-streak">0</span>
+          <span>يوم</span>
+        </div>
+        <div class="hero-pill">
+          <i class="fa fa-coins"></i>
+          <span id="hero-coins">0</span>
+          <span>عملة</span>
         </div>
       </div>
     </div>
@@ -970,41 +929,39 @@ select.form-input { cursor: pointer; }
       <div class="dash-stats-grid">
         <div class="stat-card">
           <div class="stat-card-accent" style="background:rgba(37,99,235,0.06);"></div>
-          <div class="stat-icon-wrap" style="background:rgba(37,99,235,0.1);color:var(--accent);"><i class="fa fa-clock"></i></div>
+          <div class="stat-icon-wrap" style="background:rgba(37,99,235,0.1);color:var(--accent);">
+            <i class="fa fa-clock"></i>
+          </div>
           <div class="stat-val" id="stat-total-time">0</div>
           <div class="stat-label">دقيقة هذا الأسبوع</div>
         </div>
         <div class="stat-card">
           <div class="stat-card-accent" style="background:rgba(34,197,94,0.06);"></div>
-          <div class="stat-icon-wrap" style="background:rgba(34,197,94,0.1);color:var(--success);"><i class="fa fa-check-circle"></i></div>
+          <div class="stat-icon-wrap" style="background:rgba(34,197,94,0.1);color:var(--success);">
+            <i class="fa fa-check-circle"></i>
+          </div>
           <div class="stat-val" id="stat-completed">0</div>
           <div class="stat-label">درس مكتمل</div>
         </div>
         <div class="stat-card">
           <div class="stat-card-accent" style="background:rgba(245,158,11,0.06);"></div>
-          <div class="stat-icon-wrap" style="background:rgba(245,158,11,0.1);color:var(--warning);"><i class="fa fa-book"></i></div>
+          <div class="stat-icon-wrap" style="background:rgba(245,158,11,0.1);color:var(--warning);">
+            <i class="fa fa-book"></i>
+          </div>
           <div class="stat-val" id="stat-subjects">0</div>
           <div class="stat-label">مادة دراسية</div>
         </div>
         <div class="stat-card">
           <div class="stat-card-accent" style="background:rgba(168,85,247,0.06);"></div>
-          <div class="stat-icon-wrap" style="background:rgba(168,85,247,0.1);color:#a855f7;"><i class="fa fa-coins"></i></div>
+          <div class="stat-icon-wrap" style="background:rgba(168,85,247,0.1);color:#a855f7;">
+            <i class="fa fa-coins"></i>
+          </div>
           <div class="stat-val" id="stat-coins">0</div>
           <div class="stat-label">عملة تركيز</div>
         </div>
       </div>
 
-      <!-- AI Suggestion Card -->
-      <div class="dash-section" style="margin-bottom:14px;">
-        <div class="ai-dash-card" id="ai-dash-card">
-          <div class="ai-dash-label"><i class="fa fa-robot"></i> Groq AI يقول</div>
-          <div class="ai-dash-text" id="ai-dash-text">جاري تحليل بياناتك...</div>
-          <button class="ai-dash-btn" onclick="AIManager.generateDashInsight()">
-            <i class="fa fa-sync-alt"></i> تحديث الاقتراح
-          </button>
-        </div>
-      </div>
-
+      <!-- weekly goal -->
       <div class="dash-section" style="margin-bottom:14px;">
         <div class="dash-section-title">الهدف الأسبوعي</div>
         <div class="goal-card">
@@ -1016,6 +973,7 @@ select.form-input { cursor: pointer; }
         </div>
       </div>
 
+      <!-- suggestions -->
       <div class="dash-section">
         <div class="dash-section-title">
           <span><i class="fa fa-lightbulb" style="color:var(--warning);margin-left:6px;"></i>اقتراحات ذكية</span>
@@ -1023,6 +981,7 @@ select.form-input { cursor: pointer; }
         <div class="sugg-card" id="suggestions-list"></div>
       </div>
 
+      <!-- recent sessions -->
       <div class="dash-section" style="margin-top:14px;">
         <div class="dash-section-title">
           <span>آخر الجلسات</span>
@@ -1033,6 +992,7 @@ select.form-input { cursor: pointer; }
         </div>
       </div>
 
+      <!-- heatmap -->
       <div class="dash-section" style="margin-top:14px;margin-bottom:20px;">
         <div class="dash-section-title">خريطة النشاط — 60 يوم</div>
         <div class="card" style="padding:16px;">
@@ -1050,12 +1010,7 @@ select.form-input { cursor: pointer; }
           <div class="page-title">المواد</div>
           <div class="page-sub">دروسك وتقدمك في مكان واحد</div>
         </div>
-        <div style="display:flex;gap:8px;">
-          <button class="btn-icon" onclick="AIManager.askAboutSubjects()" title="تحليل AI" style="background:var(--ai-soft);border-color:rgba(124,58,237,0.2);color:var(--ai-color);">
-            <i class="fa fa-robot"></i>
-          </button>
-          <button class="btn-fab" onclick="SubjectManager.openAddSubject()"><i class="fa fa-plus"></i></button>
-        </div>
+        <button class="btn-fab" onclick="SubjectManager.openAddSubject()"><i class="fa fa-plus"></i></button>
       </div>
     </div>
     <div class="content" style="padding:16px;">
@@ -1066,18 +1021,11 @@ select.form-input { cursor: pointer; }
   <!-- STUDY -->
   <div class="page" id="page-study">
     <div class="page-header">
-      <div class="page-header-row">
-        <div>
-          <div class="page-title">المذاكرة</div>
-          <div class="page-sub">ابدأ جلسة دراسة مركزة</div>
-        </div>
-        <button class="btn-icon" onclick="AIManager.quickAsk('أنا على وشك المذاكرة، ماذا تنصحني بدراسته الآن وما أفضل طريقة؟'); UIManager.openModal('modal-ai');"
-          style="background:var(--ai-soft);border-color:rgba(124,58,237,0.2);color:var(--ai-color);" title="نصيحة AI">
-          <i class="fa fa-robot"></i>
-        </button>
-      </div>
+      <div class="page-title">المذاكرة</div>
+      <div class="page-sub">ابدأ جلسة دراسة مركزة</div>
     </div>
     <div class="content" style="padding:16px;">
+      <!-- quick start -->
       <div class="quick-start-card">
         <div class="card-heading">⚡ بدء سريع</div>
         <div class="quick-selects">
@@ -1090,8 +1038,10 @@ select.form-input { cursor: pointer; }
         </div>
       </div>
 
+      <!-- timer -->
       <div class="timer-card">
         <div class="timer-mode-tabs" id="timer-mode-tabs"></div>
+
         <div class="timer-ring-wrap">
           <svg class="timer-svg" viewBox="0 0 180 180">
             <circle class="timer-ring-bg" cx="90" cy="90" r="78" stroke-width="7"/>
@@ -1103,18 +1053,29 @@ select.form-input { cursor: pointer; }
             <div class="timer-phase-label" id="timer-phase-label">وقت الدراسة</div>
           </div>
         </div>
+
         <div class="pomo-dots" id="pomo-dots">
           <div class="pomo-dot active"></div>
           <div class="pomo-dot"></div>
           <div class="pomo-dot"></div>
           <div class="pomo-dot"></div>
         </div>
+
         <div class="timer-btns">
-          <button class="timer-btn-secondary" id="btn-reset" onclick="TimerManager.reset()" title="إعادة"><i class="fa fa-rotate-left"></i></button>
-          <button class="timer-btn-main" id="btn-start" onclick="TimerManager.toggle()"><i class="fa fa-play"></i></button>
-          <button class="timer-btn-main" id="btn-pause" onclick="TimerManager.pause()" style="display:none;background:var(--text-sub);"><i class="fa fa-pause"></i></button>
-          <button class="timer-btn-secondary" id="btn-zen" onclick="TimerManager.enterZen()" title="وضع التركيز"><i class="fa fa-moon"></i></button>
+          <button class="timer-btn-secondary" id="btn-reset" onclick="TimerManager.reset()" title="إعادة">
+            <i class="fa fa-rotate-left"></i>
+          </button>
+          <button class="timer-btn-main" id="btn-start" onclick="TimerManager.toggle()">
+            <i class="fa fa-play"></i>
+          </button>
+          <button class="timer-btn-main" id="btn-pause" onclick="TimerManager.pause()" style="display:none;background:var(--text-sub);">
+            <i class="fa fa-pause"></i>
+          </button>
+          <button class="timer-btn-secondary" id="btn-zen" onclick="TimerManager.enterZen()" title="وضع التركيز">
+            <i class="fa fa-moon"></i>
+          </button>
         </div>
+
         <div class="timer-session-info" id="timer-session-info">اختر مادة ودرساً ثم ابدأ</div>
       </div>
     </div>
@@ -1128,13 +1089,7 @@ select.form-input { cursor: pointer; }
           <div class="page-title">ملاحظاتي</div>
           <div class="page-sub">ملخصاتك ومراجعاتك</div>
         </div>
-        <div style="display:flex;gap:8px;">
-          <button class="btn-icon" onclick="AIManager.setMode('summarize');UIManager.openModal('modal-ai');"
-            style="background:var(--ai-soft);border-color:rgba(124,58,237,0.2);color:var(--ai-color);" title="تلخيص AI">
-            <i class="fa fa-robot"></i>
-          </button>
-          <button class="btn-fab" onclick="NoteManager.openAdd()"><i class="fa fa-plus"></i></button>
-        </div>
+        <button class="btn-fab" onclick="NoteManager.openAdd()"><i class="fa fa-plus"></i></button>
       </div>
     </div>
     <div class="content" style="padding:16px;">
@@ -1156,16 +1111,8 @@ select.form-input { cursor: pointer; }
   <!-- REPORTS -->
   <div class="page" id="page-reports">
     <div class="page-header">
-      <div class="page-header-row">
-        <div>
-          <div class="page-title">التقارير</div>
-          <div class="page-sub">حلّل أداءك وإنجازاتك</div>
-        </div>
-        <button class="btn-icon" onclick="AIManager.analyzePerformance()"
-          style="background:var(--ai-soft);border-color:rgba(124,58,237,0.2);color:var(--ai-color);" title="تحليل AI">
-          <i class="fa fa-robot"></i>
-        </button>
-      </div>
+      <div class="page-title">التقارير</div>
+      <div class="page-sub">حلّل أداءك وإنجازاتك</div>
     </div>
     <div class="content" style="padding:16px;">
       <div class="report-actions">
@@ -1185,23 +1132,19 @@ select.form-input { cursor: pointer; }
     </div>
     <div class="content" style="padding:16px;">
       <div class="settings-section">
-        <div class="settings-section-title">الحساب</div>
-        <div class="setting-row">
-          <div>
-            <div class="setting-label" id="settings-username-display">عبدالله</div>
-            <div class="setting-desc">مسجل الدخول حالياً</div>
-          </div>
-          <button class="btn btn-ghost btn-sm" onclick="Auth.logout()"><i class="fa fa-sign-out-alt"></i> خروج</button>
-        </div>
-      </div>
-      <div class="settings-section">
         <div class="settings-section-title">الأهداف اليومية والأسبوعية</div>
         <div class="setting-row">
-          <div><div class="setting-label">الهدف اليومي</div><div class="setting-desc">كم دقيقة تريد أن تدرس يومياً؟</div></div>
+          <div>
+            <div class="setting-label">الهدف اليومي</div>
+            <div class="setting-desc">كم دقيقة تريد أن تدرس يومياً؟</div>
+          </div>
           <input class="form-input" type="number" id="set-daily-goal" style="width:90px;text-align:center;" min="10" max="720">
         </div>
         <div class="setting-row">
-          <div><div class="setting-label">الهدف الأسبوعي</div><div class="setting-desc">كم دقيقة أسبوعياً؟</div></div>
+          <div>
+            <div class="setting-label">الهدف الأسبوعي</div>
+            <div class="setting-desc">كم دقيقة أسبوعياً؟</div>
+          </div>
           <input class="form-input" type="number" id="set-weekly-goal" style="width:90px;text-align:center;" min="30" max="5040">
         </div>
         <button class="btn btn-primary btn-sm" style="margin-top:6px;" onclick="SettingsManager.saveGoals()"><i class="fa fa-save"></i> حفظ الأهداف</button>
@@ -1209,7 +1152,10 @@ select.form-input { cursor: pointer; }
       <div class="settings-section">
         <div class="settings-section-title">البيانات</div>
         <div class="setting-row">
-          <div><div class="setting-label">حذف جميع البيانات</div><div class="setting-desc">سيتم حذف كل شيء بشكل دائم</div></div>
+          <div>
+            <div class="setting-label">حذف جميع البيانات</div>
+            <div class="setting-desc">سيتم حذف كل شيء بشكل دائم</div>
+          </div>
           <button class="btn btn-danger btn-sm" onclick="DataManager.clearAll()"><i class="fa fa-trash"></i> حذف</button>
         </div>
       </div>
@@ -1220,139 +1166,41 @@ select.form-input { cursor: pointer; }
     </div>
   </div>
 
-</div><!-- end app -->
-
-<!-- AI FAB -->
-<div id="ai-fab">
-  <button class="ai-fab-btn" onclick="UIManager.openModal('modal-ai')" title="المساعد الذكي">
-    🤖
-  </button>
 </div>
 
 <!-- BOTTOM NAV -->
-<nav id="bottom-nav" style="display:none">
+<nav id="bottom-nav">
   <div class="nav-tab active" onclick="UIManager.navigate('dashboard')" data-page="dashboard">
-    <i class="fa fa-house"></i><span>الرئيسية</span>
+    <i class="fa fa-house"></i>
+    <span>الرئيسية</span>
   </div>
   <div class="nav-tab" onclick="UIManager.navigate('subjects')" data-page="subjects">
-    <i class="fa fa-book-open"></i><span>المواد</span>
+    <i class="fa fa-book-open"></i>
+    <span>المواد</span>
   </div>
   <div class="nav-tab" onclick="UIManager.navigate('study')" data-page="study">
-    <i class="fa fa-circle-play"></i><span>المذاكرة</span>
+    <i class="fa fa-circle-play"></i>
+    <span>المذاكرة</span>
   </div>
   <div class="nav-tab" onclick="UIManager.navigate('notes')" data-page="notes">
-    <i class="fa fa-note-sticky"></i><span>ملاحظاتي</span>
+    <i class="fa fa-note-sticky"></i>
+    <span>ملاحظاتي</span>
   </div>
   <div class="nav-tab" onclick="UIManager.navigate('reports')" data-page="reports">
-    <i class="fa fa-chart-bar"></i><span>التقارير</span>
+    <i class="fa fa-chart-bar"></i>
+    <span>التقارير</span>
   </div>
   <div class="nav-tab" onclick="UIManager.navigate('settings')" data-page="settings">
-    <i class="fa fa-gear"></i><span>الإعدادات</span>
+    <i class="fa fa-gear"></i>
+    <span>الإعدادات</span>
   </div>
 </nav>
 
 <script>
-// ══════════════════════════════════
-// SECURITY: API KEY OBFUSCATION
-// The key is split and reassembled at runtime to avoid plain-text exposure in source
-// For production: use a backend proxy (Cloudflare Worker / Netlify Function)
-// ══════════════════════════════════
-const _k = (function(){
-  const p = ['gsk_0B2zchB1YDX','QXs8oBFwBWGd','yb3FYq9UniBd','btOIFZ27R5ol','W11iE'];
-  return p.join('');
-})();
-
-// ══════════════════════════════════
-// AUTH MODULE
-// ══════════════════════════════════
-const Auth = {
-  USERS_KEY: 'af_users_v2',
-  SESSION_KEY: 'af_session_v2',
-
-  getUsers() {
-    try { return JSON.parse(localStorage.getItem(this.USERS_KEY) || '{}'); } catch { return {}; }
-  },
-  saveUsers(u) { localStorage.setItem(this.USERS_KEY, JSON.stringify(u)); },
-
-  getSession() {
-    try { return JSON.parse(localStorage.getItem(this.SESSION_KEY) || 'null'); } catch { return null; }
-  },
-  saveSession(s) { localStorage.setItem(this.SESSION_KEY, JSON.stringify(s)); },
-  clearSession() { localStorage.removeItem(this.SESSION_KEY); },
-
-  switchTab(tab) {
-    document.getElementById('form-login').style.display = tab === 'login' ? 'flex' : 'none';
-    document.getElementById('form-register').style.display = tab === 'register' ? 'flex' : 'none';
-    document.getElementById('tab-login').classList.toggle('active', tab === 'login');
-    document.getElementById('tab-register').classList.toggle('active', tab === 'register');
-    document.getElementById('login-err').classList.remove('show');
-  },
-
-  showErr(msg) {
-    const el = document.getElementById('login-err');
-    el.textContent = msg; el.classList.add('show');
-    setTimeout(() => el.classList.remove('show'), 3000);
-  },
-
-  login() {
-    const user = document.getElementById('inp-login-user').value.trim();
-    const pass = document.getElementById('inp-login-pass').value;
-    if (!user || !pass) { this.showErr('ادخل اسم المستخدم وكلمة المرور'); return; }
-    const users = this.getUsers();
-    if (!users[user]) { this.showErr('اسم المستخدم غير موجود'); return; }
-    if (users[user].pass !== btoa(pass)) { this.showErr('كلمة المرور غلط'); return; }
-    this.saveSession({ username: user, name: users[user].name });
-    this.startApp(user, users[user].name);
-  },
-
-  register() {
-    const name = document.getElementById('inp-reg-name').value.trim();
-    const user = document.getElementById('inp-reg-user').value.trim();
-    const pass = document.getElementById('inp-reg-pass').value;
-    if (!name || !user || !pass) { this.showErr('ادخل جميع البيانات'); return; }
-    if (pass.length < 6) { this.showErr('كلمة المرور قصيرة (6 أحرف+)'); return; }
-    if (!/^[a-zA-Z0-9_\u0600-\u06FF]+$/.test(user)) { this.showErr('اسم المستخدم: حروف وأرقام فقط'); return; }
-    const users = this.getUsers();
-    if (users[user]) { this.showErr('اسم المستخدم موجود مسبقاً'); return; }
-    users[user] = { name, pass: btoa(pass) };
-    this.saveUsers(users);
-    this.saveSession({ username: user, name });
-    UIManager.toast(`مرحباً ${name}! حسابك جاهز 🎉`, 'success');
-    this.startApp(user, name);
-  },
-
-  bypass() {
-    const name = 'عبدالله';
-    const user = 'demo';
-    this.saveSession({ username: user, name });
-    this.startApp(user, name);
-  },
-
-  logout() {
-    if (!confirm('تسجيل الخروج؟')) return;
-    this.clearSession();
-    location.reload();
-  },
-
-  startApp(username, name) {
-    document.getElementById('login-screen').classList.add('hidden');
-    document.getElementById('app').style.display = 'block';
-    document.getElementById('bottom-nav').style.display = 'flex';
-    document.getElementById('ai-fab').classList.add('visible');
-    document.getElementById('hero-display-name').textContent = name;
-    document.getElementById('settings-username-display').textContent = `${name} (@${username})`;
-    // Load user-specific data
-    DataManager.USER_KEY = `abdullahFocus_v2_${username}`;
-    appData = DataManager.load();
-    initApp();
-  }
-};
-
-// ══════════════════════════════════
+// ═══════════════════════════════════
 // DATA MANAGER
-// ══════════════════════════════════
+// ═══════════════════════════════════
 const DataManager = {
-  USER_KEY: 'abdullahFocus_v2_demo',
   defaultData: {
     subjects: [], sessions: [], notes: [], insights: [],
     streak: { current: 0, lastDate: null },
@@ -1362,12 +1210,12 @@ const DataManager = {
   },
   load() {
     try {
-      const saved = localStorage.getItem(this.USER_KEY);
+      const saved = localStorage.getItem('abdullahFocus_v2');
       return saved ? { ...this.defaultData, ...JSON.parse(saved) } : { ...this.defaultData };
     } catch { return { ...this.defaultData }; }
   },
   save(data) {
-    try { localStorage.setItem(this.USER_KEY, JSON.stringify(data)); } catch {}
+    try { localStorage.setItem('abdullahFocus_v2', JSON.stringify(data)); } catch {}
   },
   exportData() {
     const blob = new Blob([JSON.stringify(appData, null, 2)], { type: 'application/json' });
@@ -1378,7 +1226,8 @@ const DataManager = {
     UIManager.toast('تم تصدير البيانات ✓', 'success');
   },
   importData(e) {
-    const file = e.target.files[0]; if (!file) return;
+    const file = e.target.files[0];
+    if (!file) return;
     const r = new FileReader();
     r.onload = ev => {
       try {
@@ -1389,11 +1238,12 @@ const DataManager = {
         UIManager.toast('تم الاستيراد بنجاح ✓', 'success');
       } catch { UIManager.toast('ملف غير صالح', 'error'); }
     };
-    r.readAsText(file); e.target.value = '';
+    r.readAsText(file);
+    e.target.value = '';
   },
   clearAll() {
     if (!confirm('هل أنت متأكد من حذف جميع البيانات؟')) return;
-    localStorage.removeItem(this.USER_KEY);
+    localStorage.removeItem('abdullahFocus_v2');
     Object.assign(appData, DataManager.defaultData);
     UIManager.refreshAll();
     UIManager.toast('تم حذف البيانات', 'error');
@@ -1402,197 +1252,9 @@ const DataManager = {
 
 let appData = DataManager.load();
 
-// ══════════════════════════════════
-// GROQ AI MANAGER
-// ══════════════════════════════════
-const AIManager = {
-  mode: 'chat',
-  chatHistory: [],
-  isLoading: false,
-
-  setMode(mode, btn) {
-    this.mode = mode;
-    document.querySelectorAll('.ai-mode-tab').forEach(b => b.classList.remove('active'));
-    if (btn) btn.classList.add('active');
-    const placeholders = {
-      chat: 'اسألني أي شيء...',
-      explain: 'اكتب الموضوع الذي تريد شرحه...',
-      summarize: 'الصق النص هنا لتلخيصه...',
-      quiz: 'اكتب الموضوع لإنشاء أسئلة اختبار...',
-      plan: 'اوصف وضعك الدراسي الآن...'
-    };
-    document.getElementById('ai-inp').placeholder = placeholders[mode] || 'اسألني...';
-  },
-
-  getSystemPrompt() {
-    const subjectsInfo = appData.subjects.map(s => {
-      const done = s.lessons.filter(l => l.status === 'done').length;
-      const total = s.lessons.length;
-      const pending = s.lessons.filter(l => l.status !== 'done').map(l => l.title).slice(0,3);
-      return `${s.name}: ${done}/${total} درس (${Math.round(done/Math.max(total,1)*100)}%) — متبقي: ${pending.join('، ') || 'لا شيء'}`;
-    }).join('\n');
-
-    const weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate() - 7);
-    const weekMins = appData.sessions.filter(s => new Date(s.date) >= weekAgo).reduce((a,s) => a + s.duration, 0);
-    const today = new Date().toISOString().split('T')[0];
-    const todayMins = appData.sessions.filter(s => s.date === today).reduce((a,s) => a + s.duration, 0);
-
-    const modeInstructions = {
-      chat: 'أنت مساعد دراسة ذكي ومحفز. أجب بشكل مختصر وعملي.',
-      explain: 'أنت معلم خبير. اشرح الموضوع بأمثلة بسيطة وواضحة. استخدم العناوين والنقاط.',
-      summarize: 'أنت متخصص في التلخيص. لخّص النص بشكل منظم مع أهم النقاط.',
-      quiz: 'أنت معلم يصنع اختبارات. أنشئ 5 أسئلة متنوعة مع الإجابات الصحيحة. استخدم تنسيق واضح.',
-      plan: 'أنت مخطط أكاديمي. أنشئ خطة مذاكرة واقعية ومحفزة بناءً على بيانات الطالب.'
-    };
-
-    return `${modeInstructions[this.mode] || modeInstructions.chat}
-
-بيانات الطالب:
-- السلسلة: ${appData.streak.current} يوم
-- دراسة هذا الأسبوع: ${weekMins} دقيقة (هدف: ${appData.goals.weekly})
-- دراسة اليوم: ${todayMins} دقيقة
-- العملات: ${appData.coins}
-- المواد:
-${subjectsInfo || 'لا توجد مواد بعد'}
-
-قواعد الرد:
-- الرد باللغة العربية فقط
-- الرد موجز وعملي (لا يتجاوز 200 كلمة إلا للشرح والاختبار)
-- إذا كان وضع الشرح أو الاختبار، يمكن الإسهاب
-- كن مشجعاً ومحفزاً
-- استخدم الإيموجي بشكل خفيف`;
-  },
-
-  async callGroq(messages) {
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${_k}`
-      },
-      body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
-        messages,
-        temperature: 0.7,
-        max_tokens: 1024
-      })
-    });
-    if (!res.ok) {
-      const e = await res.text();
-      throw new Error(e);
-    }
-    const data = await res.json();
-    return data.choices?.[0]?.message?.content || 'لم أتمكن من الإجابة.';
-  },
-
-  async send() {
-    if (this.isLoading) return;
-    const inp = document.getElementById('ai-inp');
-    const text = inp.value.trim();
-    if (!text) return;
-    inp.value = '';
-
-    this.addMessage('user', text);
-    this.showThinking();
-    this.isLoading = true;
-    document.getElementById('ai-send-btn').disabled = true;
-
-    const messages = [
-      { role: 'system', content: this.getSystemPrompt() },
-      ...this.chatHistory.slice(-8),
-      { role: 'user', content: text }
-    ];
-
-    try {
-      const reply = await this.callGroq(messages);
-      this.hideThinking();
-      this.chatHistory.push({ role: 'user', content: text });
-      this.chatHistory.push({ role: 'assistant', content: reply });
-      if (this.chatHistory.length > 20) this.chatHistory = this.chatHistory.slice(-20);
-      this.addMessage('ai', reply);
-    } catch (e) {
-      this.hideThinking();
-      const errMsg = e.message.includes('401') ? 'خطأ في مفتاح API' :
-                     e.message.includes('429') ? 'تجاوزت الحد — حاول بعد دقيقة' :
-                     'خطأ في الاتصال، تحقق من الإنترنت';
-      this.addMessage('ai', `❌ ${errMsg}`);
-    } finally {
-      this.isLoading = false;
-      document.getElementById('ai-send-btn').disabled = false;
-    }
-  },
-
-  quickAsk(text) {
-    document.getElementById('ai-inp').value = text;
-    this.send();
-  },
-
-  addMessage(role, text) {
-    const hist = document.getElementById('ai-chat-history');
-    const div = document.createElement('div');
-    div.className = `chat-msg ${role}`;
-    if (role === 'ai') {
-      div.innerHTML = `<div class="ai-label">🤖 Groq AI</div>${this.formatText(text)}`;
-    } else {
-      div.textContent = text;
-    }
-    hist.appendChild(div);
-    hist.scrollTop = hist.scrollHeight;
-  },
-
-  formatText(text) {
-    // Simple markdown-like formatting
-    return text
-      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.+?)\*/g, '<em>$1</em>')
-      .replace(/\n/g, '<br>')
-      .replace(/^- (.+)/gm, '• $1');
-  },
-
-  showThinking() {
-    const hist = document.getElementById('ai-chat-history');
-    const div = document.createElement('div');
-    div.className = 'chat-thinking'; div.id = 'ai-thinking';
-    div.innerHTML = '<span></span><span></span><span></span>';
-    hist.appendChild(div);
-    hist.scrollTop = hist.scrollHeight;
-  },
-
-  hideThinking() {
-    document.getElementById('ai-thinking')?.remove();
-  },
-
-  async generateDashInsight() {
-    const el = document.getElementById('ai-dash-text');
-    el.textContent = 'جاري التحليل...';
-    try {
-      const messages = [
-        { role: 'system', content: this.getSystemPrompt() },
-        { role: 'user', content: 'أعطني اقتراحاً واحداً مختصراً ومحدداً لأهم شيء يجب أن أفعله الآن في مذاكرتي. جملة أو جملتين فقط.' }
-      ];
-      const reply = await this.callGroq(messages);
-      el.textContent = reply;
-    } catch {
-      el.textContent = 'ركّز على المواد التي فيها دروس صعبة غير مكتملة أولاً!';
-    }
-  },
-
-  askAboutSubjects() {
-    this.setMode('chat');
-    this.quickAsk('حلّل مواد دراستي وأخبرني أيها يحتاج اهتماماً أكثر وما الترتيب الأمثل للمذاكرة؟');
-    UIManager.openModal('modal-ai');
-  },
-
-  analyzePerformance() {
-    this.setMode('plan');
-    this.quickAsk('بناءً على بيانات أدائي، حلّل نقاط قوتي وضعفي وأعطني 3 خطوات عملية لتحسين أدائي.');
-    UIManager.openModal('modal-ai');
-  }
-};
-
-// ══════════════════════════════════
+// ═══════════════════════════════════
 // STREAK MANAGER
-// ══════════════════════════════════
+// ═══════════════════════════════════
 const StreakManager = {
   update() {
     const today = new Date().toISOString().split('T')[0];
@@ -1601,15 +1263,17 @@ const StreakManager = {
       const diff = (new Date(today) - new Date(appData.streak.lastDate)) / 86400000;
       if (diff === 1) appData.streak.current++;
       else if (diff > 1) appData.streak.current = 1;
-    } else { appData.streak.current = 1; }
+    } else {
+      appData.streak.current = 1;
+    }
     appData.streak.lastDate = today;
     DataManager.save(appData);
   }
 };
 
-// ══════════════════════════════════
+// ═══════════════════════════════════
 // TIMER MANAGER
-// ══════════════════════════════════
+// ═══════════════════════════════════
 const TimerManager = {
   modes: [
     { label: 'بومودورو', min: 25, break: 5 },
@@ -1617,25 +1281,43 @@ const TimerManager = {
     { label: '50 دقيقة', min: 50, break: 10 },
     { label: '2 ساعة', min: 120, break: 20 }
   ],
-  currentMode: 0, startTime: null, totalDuration: 25 * 60,
-  remaining: 25 * 60, running: false, paused: false, pausedRemaining: 0,
-  phase: 'study', pomoDone: 0, interval: null, zenActive: false,
-  insightRating: 0, sessionSubjectId: null, sessionLessonId: null,
+  currentMode: 0,
+  startTime: null,
+  totalDuration: 25 * 60,
+  remaining: 25 * 60,
+  running: false,
+  paused: false,
+  pausedRemaining: 0,
+  phase: 'study',
+  pomoDone: 0,
+  interval: null,
+  zenActive: false,
+  insightRating: 0,
+  sessionSubjectId: null,
+  sessionLessonId: null,
   CIRCUMFERENCE: 2 * Math.PI * 78,
 
-  init() { this.buildModeTabs(); this.buildPomoDots(); this.updateDisplay(this.totalDuration); this.populateQuickStart(); },
+  init() {
+    this.buildModeTabs();
+    this.buildPomoDots();
+    this.updateDisplay(this.totalDuration);
+    this.populateQuickStart();
+  },
+
   buildModeTabs() {
     const c = document.getElementById('timer-mode-tabs');
     c.innerHTML = this.modes.map((m, i) =>
       `<button class="timer-mode-tab ${i===0?'active':''}" onclick="TimerManager.setMode(${i})">${m.label}</button>`
     ).join('');
   },
+
   buildPomoDots() {
     const c = document.getElementById('pomo-dots');
     c.innerHTML = Array.from({length:4}, (_,i) =>
       `<div class="pomo-dot ${i<this.pomoDone?'done':i===this.pomoDone?'active':''}"></div>`
     ).join('');
   },
+
   setMode(i) {
     if (this.running) return;
     this.currentMode = i;
@@ -1643,20 +1325,24 @@ const TimerManager = {
     this.totalDuration = this.modes[i].min * 60;
     this.remaining = this.totalDuration;
     this.phase = 'study';
-    this.updateDisplay(this.remaining); this.updateRing(1);
+    this.updateDisplay(this.remaining);
+    this.updateRing(1);
     document.getElementById('timer-phase-label').textContent = 'وقت الدراسة';
     document.getElementById('timer-ring').classList.remove('break-phase');
   },
+
   populateQuickStart() {
     const ss = document.getElementById('qs-subject');
     const cur = ss.value;
     ss.innerHTML = '<option value="">اختر المادة...</option>';
     appData.subjects.forEach(s => {
       const o = document.createElement('option');
-      o.value = s.id; o.textContent = s.name; ss.appendChild(o);
+      o.value = s.id; o.textContent = s.name;
+      ss.appendChild(o);
     });
     if (cur) { ss.value = cur; this.updateLessonSelect(); }
   },
+
   updateLessonSelect() {
     const sid = document.getElementById('qs-subject').value;
     const ls = document.getElementById('qs-lesson');
@@ -1665,14 +1351,21 @@ const TimerManager = {
     const subj = appData.subjects.find(s => s.id === sid);
     if (!subj) return;
     subj.lessons.forEach(l => {
-      const o = document.createElement('option'); o.value = l.id; o.textContent = l.title; ls.appendChild(o);
+      const o = document.createElement('option');
+      o.value = l.id; o.textContent = l.title;
+      ls.appendChild(o);
     });
   },
-  toggle() { if (!this.running) this.start(); },
+
+  toggle() {
+    if (!this.running) this.start();
+  },
+
   start() {
     const sid = document.getElementById('qs-subject').value;
     const lid = document.getElementById('qs-lesson').value;
-    this.sessionSubjectId = sid || null; this.sessionLessonId = lid || null;
+    this.sessionSubjectId = sid || null;
+    this.sessionLessonId = lid || null;
     if (!this.paused) {
       this.startTime = Date.now();
       this.totalDuration = (this.phase === 'study' ? this.modes[this.currentMode].min :
@@ -1681,133 +1374,184 @@ const TimerManager = {
     } else {
       this.startTime = Date.now() - ((this.totalDuration - this.pausedRemaining) * 1000);
     }
-    this.running = true; this.paused = false;
+    this.running = true;
+    this.paused = false;
     document.getElementById('btn-start').style.display = 'none';
     document.getElementById('btn-pause').style.display = 'flex';
-    this.tick(); this.interval = setInterval(() => this.tick(), 500); this.updateSessionInfo();
+    this.tick();
+    this.interval = setInterval(() => this.tick(), 500);
+    this.updateSessionInfo();
   },
+
   pause() {
     if (!this.running) return;
-    clearInterval(this.interval); this.running = false; this.paused = true;
+    clearInterval(this.interval);
+    this.running = false;
+    this.paused = true;
     this.pausedRemaining = this.remaining;
     document.getElementById('btn-start').style.display = 'flex';
     document.getElementById('btn-pause').style.display = 'none';
   },
+
   reset() {
-    clearInterval(this.interval); this.running = false; this.paused = false;
-    this.phase = 'study'; this.totalDuration = this.modes[this.currentMode].min * 60;
-    this.remaining = this.totalDuration; this.startTime = null;
+    clearInterval(this.interval);
+    this.running = false;
+    this.paused = false;
+    this.phase = 'study';
+    this.totalDuration = this.modes[this.currentMode].min * 60;
+    this.remaining = this.totalDuration;
+    this.startTime = null;
     document.getElementById('btn-start').style.display = 'flex';
     document.getElementById('btn-pause').style.display = 'none';
-    this.updateDisplay(this.remaining); this.updateRing(1);
+    this.updateDisplay(this.remaining);
+    this.updateRing(1);
     document.getElementById('timer-phase-label').textContent = 'وقت الدراسة';
     document.getElementById('timer-ring').classList.remove('break-phase');
   },
+
   tick() {
     const elapsed = (Date.now() - this.startTime) / 1000;
     this.remaining = Math.max(0, this.totalDuration - elapsed);
-    this.updateDisplay(Math.ceil(this.remaining)); this.updateRing(this.remaining / this.totalDuration);
-    if (this.zenActive) document.getElementById('zen-digits').textContent = this.formatTime(Math.ceil(this.remaining));
+    this.updateDisplay(Math.ceil(this.remaining));
+    this.updateRing(this.remaining / this.totalDuration);
+    if (this.zenActive) {
+      document.getElementById('zen-digits').textContent = this.formatTime(Math.ceil(this.remaining));
+    }
     if (this.remaining <= 0) this.complete();
   },
+
   complete() {
-    clearInterval(this.interval); this.running = false;
+    clearInterval(this.interval);
+    this.running = false;
     document.getElementById('btn-start').style.display = 'flex';
     document.getElementById('btn-pause').style.display = 'none';
+
     if (this.phase === 'study') {
       const mins = this.modes[this.currentMode].min;
       this.saveSession(mins);
       const earned = Math.floor(mins / 25);
-      if (earned > 0) { appData.coins += earned; this.showCoinAnimation(earned); }
-      DataManager.save(appData); UIManager.updateStats();
+      if (earned > 0) {
+        appData.coins += earned;
+        this.showCoinAnimation(earned);
+      }
+      DataManager.save(appData);
+      UIManager.updateStats();
       if (this.zenActive) this.exitZen();
       this.showInsightModal();
-      // AI congratulates after session
-      setTimeout(() => {
-        AIManager.quickAsk(`أكملت جلسة مذاكرة ${mins} دقيقة بنجاح! أعطني كلمة تشجيع قصيرة وذكّرني بالخطوة التالية.`);
-      }, 500);
     } else {
       UIManager.toast('انتهت الاستراحة! وقت الدراسة 📚');
-      this.phase = 'study'; this.pomoDone++;
+      this.phase = 'study';
+      this.pomoDone++;
       if (this.pomoDone >= 4) this.pomoDone = 0;
-      this.buildPomoDots(); this.totalDuration = this.modes[this.currentMode].min * 60;
-      this.remaining = this.totalDuration; this.updateDisplay(this.remaining); this.updateRing(1);
+      this.buildPomoDots();
+      this.totalDuration = this.modes[this.currentMode].min * 60;
+      this.remaining = this.totalDuration;
+      this.updateDisplay(this.remaining);
+      this.updateRing(1);
       document.getElementById('timer-phase-label').textContent = 'وقت الدراسة';
       document.getElementById('timer-ring').classList.remove('break-phase');
     }
-    if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
+    if (Notification.permission === 'granted') {
       new Notification('Abdullah Focus', { body: this.phase === 'study' ? 'انتهت الجلسة! أحسنت 🎉' : 'انتهت الاستراحة!' });
     }
   },
+
   saveSession(mins) {
-    appData.sessions.push({
-      id: Date.now().toString(), subjectId: this.sessionSubjectId,
-      lessonId: this.sessionLessonId, duration: mins,
-      date: new Date().toISOString().split('T')[0], focusRating: 0
-    });
+    const session = {
+      id: Date.now().toString(),
+      subjectId: this.sessionSubjectId,
+      lessonId: this.sessionLessonId,
+      duration: mins,
+      date: new Date().toISOString().split('T')[0],
+      focusRating: 0
+    };
+    appData.sessions.push(session);
     StreakManager.update();
   },
+
   showInsightModal() {
     this.insightRating = 0;
     document.querySelectorAll('.star-btn').forEach(s => s.style.filter = 'grayscale(1) brightness(0.6)');
     document.getElementById('inp-insight-text').value = '';
     UIManager.openModal('modal-insight');
   },
+
   saveInsight() {
     const text = document.getElementById('inp-insight-text').value.trim();
     const rating = this.insightRating;
-    if (appData.sessions.length > 0) appData.sessions[appData.sessions.length - 1].focusRating = rating;
-    if (text) {
-      appData.insights.push({ id: Date.now().toString(), text, rating, date: new Date().toISOString().split('T')[0], subjectId: this.sessionSubjectId });
+    if (appData.sessions.length > 0) {
+      appData.sessions[appData.sessions.length - 1].focusRating = rating;
     }
-    DataManager.save(appData); UIManager.closeModal('modal-insight');
+    if (text) {
+      appData.insights.push({
+        id: Date.now().toString(), text, rating,
+        date: new Date().toISOString().split('T')[0],
+        subjectId: this.sessionSubjectId
+      });
+    }
+    DataManager.save(appData);
+    UIManager.closeModal('modal-insight');
     UIManager.toast('تم حفظ التقييم ✓', 'success');
-    this.phase = 'break'; this.pomoDone = (this.pomoDone + 1) % 4; this.buildPomoDots();
+    // start break
+    this.phase = 'break';
+    this.pomoDone = (this.pomoDone + 1) % 4;
+    this.buildPomoDots();
     const breakMins = this.pomoDone === 0 ? this.modes[this.currentMode].break * 3 : this.modes[this.currentMode].break;
-    this.totalDuration = breakMins * 60; this.remaining = this.totalDuration;
-    this.updateDisplay(this.remaining); this.updateRing(1);
+    this.totalDuration = breakMins * 60;
+    this.remaining = this.totalDuration;
+    this.updateDisplay(this.remaining);
+    this.updateRing(1);
     document.getElementById('timer-phase-label').textContent = 'وقت الاستراحة ☕';
     document.getElementById('timer-ring').classList.add('break-phase');
     if (UIManager.currentPage === 'dashboard') UIManager.refreshDashboard();
   },
+
   updateDisplay(secs) {
     const t = this.formatTime(secs);
     document.getElementById('timer-display').textContent = t;
     document.title = `${t} — Abdullah Focus`;
   },
+
   formatTime(secs) {
     const m = Math.floor(secs / 60), s = secs % 60;
     return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
   },
+
   updateRing(ratio) {
     const offset = this.CIRCUMFERENCE * (1 - Math.max(0, Math.min(1, ratio)));
     document.getElementById('timer-ring').style.strokeDashoffset = offset;
   },
+
   updateSessionInfo() {
     const si = document.getElementById('timer-session-info');
+    const sid = this.sessionSubjectId;
+    const lid = this.sessionLessonId;
     let text = '';
-    if (this.sessionSubjectId) {
-      const subj = appData.subjects.find(s => s.id === this.sessionSubjectId);
+    if (sid) {
+      const subj = appData.subjects.find(s => s.id === sid);
       if (subj) text += subj.name;
     }
-    if (this.sessionLessonId && this.sessionSubjectId) {
-      const subj = appData.subjects.find(s => s.id === this.sessionSubjectId);
-      const lesson = subj?.lessons.find(l => l.id === this.sessionLessonId);
+    if (lid && sid) {
+      const subj = appData.subjects.find(s => s.id === sid);
+      const lesson = subj?.lessons.find(l => l.id === lid);
       if (lesson) text += ` — ${lesson.title}`;
     }
     si.textContent = text || 'جلسة دراسة مفتوحة';
   },
+
   enterZen() {
     this.zenActive = true;
     document.getElementById('zen-mode').classList.add('active');
+    const sid = this.sessionSubjectId;
+    const lid = this.sessionLessonId;
     let name = 'وضع التركيز';
-    if (this.sessionSubjectId) {
-      const subj = appData.subjects.find(s => s.id === this.sessionSubjectId);
+    if (sid) {
+      const subj = appData.subjects.find(s => s.id === sid);
       if (subj) name = subj.name;
     }
-    if (this.sessionLessonId && this.sessionSubjectId) {
-      const subj = appData.subjects.find(s => s.id === this.sessionSubjectId);
-      const lesson = subj?.lessons.find(l => l.id === this.sessionLessonId);
+    if (lid && sid) {
+      const subj = appData.subjects.find(s => s.id === sid);
+      const lesson = subj?.lessons.find(l => l.id === lid);
       if (lesson) name = lesson.title;
     }
     document.getElementById('zen-lesson-name').textContent = name;
@@ -1826,22 +1570,26 @@ const TimerManager = {
     document.getElementById('zen-quote').textContent = quotes[Math.floor(Math.random() * quotes.length)];
     document.body.style.overflow = 'hidden';
   },
+
   exitZen() {
     this.zenActive = false;
     document.getElementById('zen-mode').classList.remove('active');
     document.body.style.overflow = '';
   },
+
   showCoinAnimation(amount) {
     const el = document.createElement('div');
-    el.className = 'coin-pop'; el.textContent = `+${amount} 🪙`;
+    el.className = 'coin-pop';
+    el.textContent = `+${amount} 🪙`;
     el.style.cssText = `left:50%;top:60%;transform:translateX(-50%);`;
-    document.body.appendChild(el); setTimeout(() => el.remove(), 1300);
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1300);
   }
 };
 
-// ══════════════════════════════════
+// ═══════════════════════════════════
 // SUBJECT MANAGER
-// ══════════════════════════════════
+// ═══════════════════════════════════
 const COLORS = ['#2563eb','#16a34a','#dc2626','#9333ea','#ea580c','#0891b2','#be185d','#854d0e','#1d4ed8','#15803d'];
 let selectedSubjectColor = COLORS[0];
 let editingSubjectId = null;
@@ -1853,30 +1601,52 @@ const SubjectManager = {
       `<div class="color-swatch ${col===selectedSubjectColor?'selected':''}" style="background:${col};" onclick="SubjectManager.selectColor('${col}')"></div>`
     ).join('');
   },
+
   selectColor(col) {
     selectedSubjectColor = col;
     document.querySelectorAll('.color-swatch').forEach(s => s.classList.toggle('selected', s.style.background === col || s.style.backgroundColor === col));
   },
+
   openAddSubject(id) {
     editingSubjectId = id || null;
     document.getElementById('modal-subject-title').textContent = id ? 'تعديل المادة' : 'إضافة مادة';
-    if (id) { const s = appData.subjects.find(x => x.id === id); document.getElementById('inp-subject-name').value = s.name; selectedSubjectColor = s.color; }
-    else { document.getElementById('inp-subject-name').value = ''; selectedSubjectColor = COLORS[0]; }
-    this.buildColorPicker(); UIManager.openModal('modal-subject');
+    if (id) {
+      const s = appData.subjects.find(x => x.id === id);
+      document.getElementById('inp-subject-name').value = s.name;
+      selectedSubjectColor = s.color;
+    } else {
+      document.getElementById('inp-subject-name').value = '';
+      selectedSubjectColor = COLORS[0];
+    }
+    this.buildColorPicker();
+    UIManager.openModal('modal-subject');
   },
+
   saveSubject() {
     const name = document.getElementById('inp-subject-name').value.trim();
     if (!name) { UIManager.toast('أدخل اسم المادة', 'error'); return; }
-    if (editingSubjectId) { const s = appData.subjects.find(x => x.id === editingSubjectId); s.name = name; s.color = selectedSubjectColor; }
-    else { appData.subjects.push({ id: Date.now().toString(), name, color: selectedSubjectColor, lessons: [] }); }
-    DataManager.save(appData); UIManager.closeModal('modal-subject');
-    this.renderSubjects(); UIManager.refreshDashboard(); UIManager.toast('تم الحفظ ✓', 'success');
+    if (editingSubjectId) {
+      const s = appData.subjects.find(x => x.id === editingSubjectId);
+      s.name = name; s.color = selectedSubjectColor;
+    } else {
+      appData.subjects.push({ id: Date.now().toString(), name, color: selectedSubjectColor, lessons: [] });
+    }
+    DataManager.save(appData);
+    UIManager.closeModal('modal-subject');
+    this.renderSubjects();
+    UIManager.refreshDashboard();
+    UIManager.toast('تم الحفظ ✓', 'success');
   },
+
   deleteSubject(id) {
     if (!confirm('حذف هذه المادة وجميع دروسها؟')) return;
     appData.subjects = appData.subjects.filter(s => s.id !== id);
-    DataManager.save(appData); this.renderSubjects(); UIManager.refreshDashboard(); UIManager.toast('تم الحذف', 'error');
+    DataManager.save(appData);
+    this.renderSubjects();
+    UIManager.refreshDashboard();
+    UIManager.toast('تم الحذف', 'error');
   },
+
   openAddLesson(subjectId, lessonId) {
     document.getElementById('inp-lesson-subject-id').value = subjectId;
     document.getElementById('inp-lesson-id').value = lessonId || '';
@@ -1893,36 +1663,52 @@ const SubjectManager = {
     }
     UIManager.openModal('modal-lesson');
   },
+
   saveLesson() {
     const subjectId = document.getElementById('inp-lesson-subject-id').value;
     const lessonId = document.getElementById('inp-lesson-id').value;
     const title = document.getElementById('inp-lesson-title').value.trim();
     if (!title) { UIManager.toast('أدخل اسم الدرس', 'error'); return; }
     const s = appData.subjects.find(x => x.id === subjectId);
-    const data = { title, difficulty: document.getElementById('inp-lesson-difficulty').value, status: document.getElementById('inp-lesson-status').value };
-    if (lessonId) { const l = s.lessons.find(x => x.id === lessonId); Object.assign(l, data); }
-    else { s.lessons.push({ id: Date.now().toString(), ...data }); }
-    DataManager.save(appData); UIManager.closeModal('modal-lesson');
-    this.renderSubjects(); UIManager.refreshDashboard(); UIManager.toast('تم الحفظ ✓', 'success');
+    const data = {
+      title,
+      difficulty: document.getElementById('inp-lesson-difficulty').value,
+      status: document.getElementById('inp-lesson-status').value
+    };
+    if (lessonId) {
+      const l = s.lessons.find(x => x.id === lessonId);
+      Object.assign(l, data);
+    } else {
+      s.lessons.push({ id: Date.now().toString(), ...data });
+    }
+    DataManager.save(appData);
+    UIManager.closeModal('modal-lesson');
+    this.renderSubjects();
+    UIManager.refreshDashboard();
+    UIManager.toast('تم الحفظ ✓', 'success');
   },
+
   deleteLesson(subjectId, lessonId) {
     if (!confirm('حذف هذا الدرس؟')) return;
     const s = appData.subjects.find(x => x.id === subjectId);
     s.lessons = s.lessons.filter(l => l.id !== lessonId);
-    DataManager.save(appData); this.renderSubjects(); UIManager.toast('تم الحذف', 'error');
+    DataManager.save(appData);
+    this.renderSubjects();
+    UIManager.toast('تم الحذف', 'error');
   },
+
   renderSubjects() {
     const c = document.getElementById('subjects-list');
     if (!appData.subjects.length) {
       c.innerHTML = `<div class="empty-state"><div class="empty-icon">📚</div><div class="empty-text">لا توجد مواد بعد</div><div class="empty-sub">اضغط + لإضافة مادتك الأولى</div></div>`;
       return;
     }
-    const diffLabels = {easy:'سهل',medium:'متوسط',hard:'صعب'};
-    const statusLabels = {not_started:'لم يبدأ',in_progress:'جاري',done:'مكتمل'};
     c.innerHTML = appData.subjects.map(s => {
       const done = s.lessons.filter(l => l.status === 'done').length;
       const total = s.lessons.length;
       const pct = total ? Math.round((done / total) * 100) : 0;
+      const diffLabels = {easy:'سهل',medium:'متوسط',hard:'صعب'};
+      const statusLabels = {not_started:'لم يبدأ',in_progress:'جاري',done:'مكتمل'};
       return `
       <div class="subject-card">
         <div class="subject-header" onclick="SubjectManager.toggleLessons('${s.id}')">
@@ -1955,7 +1741,6 @@ const SubjectManager = {
                 </div>
                 <div class="lesson-actions">
                   <button class="btn-icon" onclick="SubjectManager.openAddLesson('${s.id}','${l.id}')" title="تعديل"><i class="fa fa-pen"></i></button>
-                  <button class="btn-icon" onclick="AIManager.quickAsk('اشرح لي درس: ${l.title.replace(/'/g,"\\'")}');UIManager.openModal('modal-ai');" title="شرح AI" style="color:var(--ai-color)"><i class="fa fa-robot"></i></button>
                   <button class="btn-icon" onclick="NoteManager.openAdd('${s.id}','${l.id}')" title="ملاحظة"><i class="fa fa-note-sticky"></i></button>
                   <button class="btn-icon" onclick="SubjectManager.deleteLesson('${s.id}','${l.id}')" title="حذف" style="color:var(--danger)"><i class="fa fa-trash"></i></button>
                 </div>
@@ -1966,25 +1751,34 @@ const SubjectManager = {
       </div>`;
     }).join('');
   },
-  toggleLessons(id) { document.getElementById(`lessons-${id}`).classList.toggle('open'); }
+
+  toggleLessons(id) {
+    document.getElementById(`lessons-${id}`).classList.toggle('open');
+  }
 };
 
-// ══════════════════════════════════
+// ═══════════════════════════════════
 // NOTE MANAGER
-// ══════════════════════════════════
+// ═══════════════════════════════════
 const NoteManager = {
   editingId: null,
+
   openAdd(subjectId, lessonId) {
     this.editingId = null;
     document.getElementById('inp-note-id').value = '';
     document.getElementById('inp-note-title').value = '';
     document.getElementById('inp-note-content').value = '';
     this.populateSubjectDropdown(subjectId);
-    if (subjectId) { document.getElementById('inp-note-subject').value = subjectId; this.populateLessonDropdown(subjectId, lessonId); }
+    if (subjectId) {
+      document.getElementById('inp-note-subject').value = subjectId;
+      this.populateLessonDropdown(subjectId, lessonId);
+    }
     UIManager.openModal('modal-note');
   },
+
   openEdit(id) {
-    const note = appData.notes.find(n => n.id === id); if (!note) return;
+    const note = appData.notes.find(n => n.id === id);
+    if (!note) return;
     this.editingId = id;
     document.getElementById('inp-note-id').value = id;
     document.getElementById('inp-note-title').value = note.title;
@@ -1995,57 +1789,93 @@ const NoteManager = {
     if (note.lessonId) document.getElementById('inp-note-lesson').value = note.lessonId;
     UIManager.openModal('modal-note');
   },
+
   populateSubjectDropdown(selected) {
     const s = document.getElementById('inp-note-subject');
     s.innerHTML = '<option value="">— بدون مادة —</option>';
     appData.subjects.forEach(subj => {
-      const o = document.createElement('option'); o.value = subj.id; o.textContent = subj.name;
-      if (subj.id === selected) o.selected = true; s.appendChild(o);
+      const o = document.createElement('option');
+      o.value = subj.id; o.textContent = subj.name;
+      if (subj.id === selected) o.selected = true;
+      s.appendChild(o);
     });
     s.onchange = () => this.populateLessonDropdown(s.value);
     this.populateLessonDropdown(selected);
   },
+
   populateLessonDropdown(subjectId, selected) {
     const l = document.getElementById('inp-note-lesson');
     l.innerHTML = '<option value="">— بدون درس —</option>';
     if (!subjectId) return;
-    const subj = appData.subjects.find(s => s.id === subjectId); if (!subj) return;
+    const subj = appData.subjects.find(s => s.id === subjectId);
+    if (!subj) return;
     subj.lessons.forEach(lesson => {
-      const o = document.createElement('option'); o.value = lesson.id; o.textContent = lesson.title;
-      if (lesson.id === selected) o.selected = true; l.appendChild(o);
+      const o = document.createElement('option');
+      o.value = lesson.id; o.textContent = lesson.title;
+      if (lesson.id === selected) o.selected = true;
+      l.appendChild(o);
     });
   },
+
   populateSubjectFilter() {
     const s = document.getElementById('notes-filter-subject');
     const cur = s.value;
     s.innerHTML = '<option value="">كل المواد</option>';
     appData.subjects.forEach(subj => {
-      const o = document.createElement('option'); o.value = subj.id; o.textContent = subj.name; s.appendChild(o);
+      const o = document.createElement('option');
+      o.value = subj.id; o.textContent = subj.name;
+      s.appendChild(o);
     });
     if (cur) s.value = cur;
   },
+
   saveNote() {
     const title = document.getElementById('inp-note-title').value.trim();
     const content = document.getElementById('inp-note-content').value.trim();
     if (!title) { UIManager.toast('أدخل عنوان الملاحظة', 'error'); return; }
     if (!content) { UIManager.toast('أدخل محتوى الملاحظة', 'error'); return; }
     const id = document.getElementById('inp-note-id').value;
-    const data = { title, content, subjectId: document.getElementById('inp-note-subject').value || null, lessonId: document.getElementById('inp-note-lesson').value || null, date: new Date().toISOString().split('T')[0] };
-    if (id) { const n = appData.notes.find(x => x.id === id); Object.assign(n, data); }
-    else { appData.notes.push({ id: Date.now().toString(), ...data }); }
-    DataManager.save(appData); UIManager.closeModal('modal-note'); this.renderNotes(); UIManager.toast('تم حفظ الملاحظة ✓', 'success');
+    const data = {
+      title, content,
+      subjectId: document.getElementById('inp-note-subject').value || null,
+      lessonId: document.getElementById('inp-note-lesson').value || null,
+      date: new Date().toISOString().split('T')[0]
+    };
+    if (id) {
+      const n = appData.notes.find(x => x.id === id);
+      Object.assign(n, data);
+    } else {
+      appData.notes.push({ id: Date.now().toString(), ...data });
+    }
+    DataManager.save(appData);
+    UIManager.closeModal('modal-note');
+    this.renderNotes();
+    UIManager.toast('تم حفظ الملاحظة ✓', 'success');
   },
-  deleteNote(id) { appData.notes = appData.notes.filter(n => n.id !== id); DataManager.save(appData); this.renderNotes(); UIManager.toast('تم الحذف', 'error'); },
+
+  deleteNote(id) {
+    appData.notes = appData.notes.filter(n => n.id !== id);
+    DataManager.save(appData);
+    this.renderNotes();
+    UIManager.toast('تم الحذف', 'error');
+  },
+
   viewNote(id) {
-    const note = appData.notes.find(n => n.id === id); if (!note) return;
+    const note = appData.notes.find(n => n.id === id);
+    if (!note) return;
     document.getElementById('note-view-title').textContent = note.title;
     const subj = note.subjectId ? appData.subjects.find(s => s.id === note.subjectId) : null;
     const lesson = note.lessonId && subj ? subj.lessons.find(l => l.id === note.lessonId) : null;
-    document.getElementById('note-view-meta').textContent = [subj?.name, lesson?.title, note.date].filter(Boolean).join(' · ');
+    document.getElementById('note-view-meta').textContent =
+      [subj?.name, lesson?.title, note.date].filter(Boolean).join(' · ');
     document.getElementById('note-view-content').textContent = note.content;
-    document.getElementById('note-view-edit-btn').onclick = () => { UIManager.closeModal('modal-note-view'); setTimeout(() => this.openEdit(id), 150); };
+    document.getElementById('note-view-edit-btn').onclick = () => {
+      UIManager.closeModal('modal-note-view');
+      setTimeout(() => this.openEdit(id), 150);
+    };
     UIManager.openModal('modal-note-view');
   },
+
   filterNotes() {
     const q = document.getElementById('notes-search').value.toLowerCase();
     const sid = document.getElementById('notes-filter-subject').value;
@@ -2056,10 +1886,14 @@ const NoteManager = {
     });
     this.renderNotes(filtered);
   },
+
   renderNotes(notes) {
     const list = notes || appData.notes;
     const c = document.getElementById('notes-grid');
-    if (!list.length) { c.innerHTML = `<div class="empty-state" style="grid-column:1/-1;"><div class="empty-icon">📝</div><div class="empty-text">لا توجد ملاحظات بعد</div><div class="empty-sub">اضغط + لإضافة ملاحظتك الأولى</div></div>`; return; }
+    if (!list.length) {
+      c.innerHTML = `<div class="empty-state" style="grid-column:1/-1;"><div class="empty-icon">📝</div><div class="empty-text">لا توجد ملاحظات بعد</div><div class="empty-sub">اضغط + لإضافة ملاحظتك الأولى</div></div>`;
+      return;
+    }
     c.innerHTML = [...list].reverse().map(n => {
       const subj = n.subjectId ? appData.subjects.find(s => s.id === n.subjectId) : null;
       return `
@@ -2074,9 +1908,9 @@ const NoteManager = {
   }
 };
 
-// ══════════════════════════════════
+// ═══════════════════════════════════
 // REPORT MANAGER
-// ══════════════════════════════════
+// ═══════════════════════════════════
 const ReportManager = {
   render() {
     const c = document.getElementById('report-content');
@@ -2088,24 +1922,33 @@ const ReportManager = {
     const monthMins = monthSessions.reduce((a,s) => a + s.duration, 0);
     const totalDone = appData.subjects.flatMap(s => s.lessons.filter(l => l.status === 'done')).length;
     const avgRating = appData.sessions.filter(s => s.focusRating > 0).reduce((a,s,_,arr) => a + s.focusRating / arr.length, 0);
+
     c.innerHTML = `
     <div class="report-section">
       <div class="report-section-title"><i class="fa fa-chart-line"></i> ملخص الأداء</div>
       <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px;">
-        ${[['الأسبوع',`${weekMins} د`,'fa-calendar-week'],['الشهر',`${monthMins} د`,'fa-calendar'],['درس مكتمل',totalDone,'fa-check'],['متوسط التركيز',avgRating?avgRating.toFixed(1)+' ⭐':'—','fa-star']].map(([l,v,icon])=>`
+        ${[
+          ['الأسبوع', `${weekMins} د`, 'fa-calendar-week'],
+          ['الشهر', `${monthMins} د`, 'fa-calendar'],
+          ['درس مكتمل', totalDone, 'fa-check'],
+          ['متوسط التركيز', avgRating ? avgRating.toFixed(1) + ' ⭐' : '—', 'fa-star']
+        ].map(([l,v,icon]) => `
           <div class="card" style="padding:14px;text-align:center;">
             <div style="font-size:11px;color:var(--text-muted);margin-bottom:6px;"><i class="fa ${icon}" style="color:var(--accent);"></i> ${l}</div>
             <div style="font-size:22px;font-weight:900;color:var(--primary);">${v}</div>
-          </div>`).join('')}
+          </div>
+        `).join('')}
       </div>
     </div>
+
     <div class="report-section">
       <div class="report-section-title"><i class="fa fa-book-open"></i> تقدم المواد</div>
       ${appData.subjects.map(s => {
         const done = s.lessons.filter(l => l.status === 'done').length;
         const total = s.lessons.length;
         const pct = total ? Math.round(done/total*100) : 0;
-        return `<div class="card" style="margin-bottom:8px;padding:14px;">
+        return `
+        <div class="card" style="margin-bottom:8px;padding:14px;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
             <div style="font-weight:700;font-size:14px;">${s.name}</div>
             <div style="font-size:13px;font-weight:700;color:var(--accent);">${pct}%</div>
@@ -2115,6 +1958,7 @@ const ReportManager = {
         </div>`;
       }).join('') || '<div style="font-size:13px;color:var(--text-muted);">لا توجد مواد بعد</div>'}
     </div>
+
     <div class="report-section">
       <div class="report-section-title"><i class="fa fa-history"></i> سجل الجلسات</div>
       <div class="card" style="padding:0;overflow:hidden;">
@@ -2123,19 +1967,27 @@ const ReportManager = {
           <tbody>
             ${[...appData.sessions].reverse().slice(0,20).map(s => {
               const subj = s.subjectId ? appData.subjects.find(x => x.id === s.subjectId) : null;
-              return `<tr><td style="font-weight:600;">${subj?subj.name:'مفتوح'}</td><td style="color:var(--accent);font-weight:700;">${s.duration} د</td><td style="color:var(--text-muted);">${s.date}</td><td>${s.focusRating?'⭐'.repeat(s.focusRating):'—'}</td></tr>`;
-            }).join('')||'<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:20px;">لا توجد جلسات بعد</td></tr>'}
+              return `<tr>
+                <td style="font-weight:600;">${subj ? subj.name : 'مفتوح'}</td>
+                <td style="color:var(--accent);font-weight:700;">${s.duration} د</td>
+                <td style="color:var(--text-muted);">${s.date}</td>
+                <td>${s.focusRating ? '⭐'.repeat(s.focusRating) : '—'}</td>
+              </tr>`;
+            }).join('') || '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:20px;">لا توجد جلسات بعد</td></tr>'}
           </tbody>
         </table>
       </div>
     </div>`;
   },
+
   exportPDF() {
     UIManager.toast('جاري إنشاء PDF...', 'success');
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ unit:'pt', format:'a4' });
-    doc.setFont('helvetica'); doc.setFontSize(18);
-    doc.text('Abdullah Focus - Performance Report', 40, 40); doc.setFontSize(11);
+    doc.setFont('helvetica');
+    doc.setFontSize(18);
+    doc.text('Abdullah Focus - Performance Report', 40, 40);
+    doc.setFontSize(11);
     let y = 70;
     const weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate() - 7);
     const weekMins = appData.sessions.filter(s => new Date(s.date) >= weekAgo).reduce((a,s) => a + s.duration, 0);
@@ -2143,18 +1995,19 @@ const ReportManager = {
     doc.text(`Total Coins: ${appData.coins}`, 40, y); y += 20;
     doc.text(`Streak: ${appData.streak.current} days`, 40, y); y += 30;
     doc.text('Sessions:', 40, y); y += 16;
-    [...appData.sessions].reverse().slice(0,15).forEach(s => {
+    [...appData.sessions].reverse().slice(0, 15).forEach(s => {
       const subj = s.subjectId ? appData.subjects.find(x => x.id === s.subjectId) : null;
-      doc.text(`  ${s.date}  ${subj?subj.name:'Open'}  ${s.duration}min`, 40, y); y += 16;
+      doc.text(`  ${s.date}  ${subj ? subj.name : 'Open'}  ${s.duration}min`, 40, y);
+      y += 16;
     });
     doc.save(`Abdullah-Focus-${new Date().toISOString().split('T')[0]}.pdf`);
     UIManager.toast('تم إنشاء PDF ✓', 'success');
   }
 };
 
-// ══════════════════════════════════
+// ═══════════════════════════════════
 // SUGGESTION MANAGER
-// ══════════════════════════════════
+// ═══════════════════════════════════
 const SuggestionManager = {
   generate() {
     const tips = [];
@@ -2171,9 +2024,9 @@ const SuggestionManager = {
   }
 };
 
-// ══════════════════════════════════
+// ═══════════════════════════════════
 // SETTINGS MANAGER
-// ══════════════════════════════════
+// ═══════════════════════════════════
 const SettingsManager = {
   render() {
     document.getElementById('set-daily-goal').value = appData.goals.daily;
@@ -2181,27 +2034,34 @@ const SettingsManager = {
     const c = document.getElementById('weekly-difficulty-report');
     const weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate() - 7);
     const recent = appData.insights.filter(i => new Date(i.date) >= weekAgo);
-    if (!recent.length) { c.innerHTML = '<div style="font-size:13px;color:var(--text-muted);">لا توجد بيانات للأسبوع الماضي</div>'; return; }
+    if (!recent.length) {
+      c.innerHTML = '<div style="font-size:13px;color:var(--text-muted);">لا توجد بيانات للأسبوع الماضي</div>';
+      return;
+    }
     c.innerHTML = recent.map(i => {
       const subj = i.subjectId ? appData.subjects.find(s => s.id === i.subjectId) : null;
-      return `<div style="border-bottom:1px solid var(--border);padding:10px 0;font-size:13px;">
+      return `<div style="border-bottom:1px solid var(--border);padding:10px 0;font-size:13px;last-child-no-border:true;">
         <div style="font-weight:600;color:var(--text);">${i.text}</div>
-        <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">${i.date}${subj?' · '+subj.name:''}${i.rating?' · '+'⭐'.repeat(i.rating):''}</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">${i.date}${subj ? ' · ' + subj.name : ''}${i.rating ? ' · ' + '⭐'.repeat(i.rating) : ''}</div>
       </div>`;
     }).join('');
   },
+
   saveGoals() {
     appData.goals.daily = parseInt(document.getElementById('set-daily-goal').value) || 120;
     appData.goals.weekly = parseInt(document.getElementById('set-weekly-goal').value) || 600;
-    DataManager.save(appData); UIManager.updateStats(); UIManager.toast('تم حفظ الأهداف ✓', 'success');
+    DataManager.save(appData);
+    UIManager.updateStats();
+    UIManager.toast('تم حفظ الأهداف ✓', 'success');
   }
 };
 
-// ══════════════════════════════════
+// ═══════════════════════════════════
 // UI MANAGER
-// ══════════════════════════════════
+// ═══════════════════════════════════
 const UIManager = {
   currentPage: 'dashboard',
+
   navigate(page) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
@@ -2213,47 +2073,71 @@ const UIManager = {
     this.renderPage(page);
     window.scrollTo(0, 0);
   },
+
   renderPage(page) {
     switch (page) {
       case 'dashboard': this.refreshDashboard(); break;
       case 'subjects': SubjectManager.renderSubjects(); break;
       case 'study': TimerManager.populateQuickStart(); break;
-      case 'notes': NoteManager.populateSubjectFilter(); NoteManager.renderNotes(); break;
+      case 'notes':
+        NoteManager.populateSubjectFilter();
+        NoteManager.renderNotes();
+        break;
       case 'reports': ReportManager.render(); break;
       case 'settings': SettingsManager.render(); break;
     }
   },
-  refreshAll() { this.updateStats(); this.renderPage(this.currentPage); },
+
+  refreshAll() {
+    this.updateStats();
+    this.renderPage(this.currentPage);
+  },
+
   refreshDashboard() {
     const today = new Date().toISOString().split('T')[0];
     const weekAgo = new Date(); weekAgo.setDate(weekAgo.getDate() - 7);
     const weekSessions = appData.sessions.filter(s => new Date(s.date) >= weekAgo);
     const weekMins = weekSessions.reduce((a,s) => a + s.duration, 0);
     const completedLessons = appData.subjects.flatMap(s => s.lessons.filter(l => l.status === 'done')).length;
+
     document.getElementById('stat-total-time').textContent = weekMins;
     document.getElementById('stat-completed').textContent = completedLessons;
     document.getElementById('stat-subjects').textContent = appData.subjects.length;
     document.getElementById('stat-coins').textContent = appData.coins;
+
     const weekPct = Math.min(100, Math.round((weekMins / appData.goals.weekly) * 100));
     document.getElementById('weekly-pct-num').textContent = weekPct + '%';
     document.getElementById('weekly-pct-detail').textContent = `${weekMins} / ${appData.goals.weekly} دقيقة`;
     document.getElementById('weekly-goal-fill').style.width = weekPct + '%';
-    document.getElementById('welcome-date').textContent = new Date().toLocaleDateString('ar-EG', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+    document.getElementById('welcome-date').textContent = new Date().toLocaleDateString('ar-EG', {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    });
+
+    // recent sessions
     const rs = document.getElementById('recent-sessions-list');
     const recent = [...appData.sessions].reverse().slice(0, 5);
     rs.innerHTML = recent.length ? recent.map(s => {
       const subj = s.subjectId ? appData.subjects.find(x => x.id === s.subjectId) : null;
       return `<div class="session-row">
-        <div><div class="session-subject">${subj?subj.name:'جلسة مفتوحة'}</div><div class="session-meta">${s.date}</div></div>
+        <div>
+          <div class="session-subject">${subj ? subj.name : 'جلسة مفتوحة'}</div>
+          <div class="session-meta">${s.date}</div>
+        </div>
         <div class="session-duration">${s.duration} د</div>
       </div>`;
     }).join('') : '<div style="font-size:13px;color:var(--text-muted);padding:8px 0;">لا توجد جلسات بعد</div>';
+
+    // suggestions
     const sl = document.getElementById('suggestions-list');
     const suggs = SuggestionManager.generate();
     sl.innerHTML = suggs.map(t => `<div class="sugg-item"><div class="sugg-dot"></div><div>${t}</div></div>`).join('');
+
+    // heatmap
     this.renderHeatmap();
     this.updateStats();
   },
+
   renderHeatmap() {
     const c = document.getElementById('heatmap-grid');
     const sessionMap = {};
@@ -2268,23 +2152,27 @@ const UIManager = {
     }
     c.innerHTML = cells.join('');
   },
+
   updateStats() {
     document.getElementById('hero-streak').textContent = appData.streak.current;
     document.getElementById('hero-coins').textContent = appData.coins;
   },
+
   openModal(id) { document.getElementById(id).classList.add('open'); },
   closeModal(id) { document.getElementById(id).classList.remove('open'); },
+
   toast(msg, type = 'default') {
     const t = document.createElement('div');
-    t.className = `toast ${type}`; t.textContent = msg;
+    t.className = `toast ${type}`;
+    t.textContent = msg;
     document.getElementById('toast-container').appendChild(t);
     setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity 0.3s'; setTimeout(() => t.remove(), 300); }, 2500);
   }
 };
 
-// ══════════════════════════════════
+// ═══════════════════════════════════
 // HELPERS
-// ══════════════════════════════════
+// ═══════════════════════════════════
 function selectStar(val) {
   TimerManager.insightRating = val;
   document.querySelectorAll('.star-btn').forEach(s => {
@@ -2293,40 +2181,33 @@ function selectStar(val) {
   });
 }
 
+// close modal on overlay click
 document.querySelectorAll('.modal-overlay').forEach(o => {
-  o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); });
+  o.addEventListener('click', e => {
+    if (e.target === o) o.classList.remove('open');
+  });
 });
 
+// notifications
 if (typeof Notification !== 'undefined' && Notification.permission === 'default') {
   Notification.requestPermission();
 }
 
-// ══════════════════════════════════
-// APP INIT
-// ══════════════════════════════════
-function initApp() {
+// ═══════════════════════════════════
+// INIT
+// ═══════════════════════════════════
+(function init() {
+  // check streak
   const today = new Date().toISOString().split('T')[0];
   if (appData.streak.lastDate && appData.streak.lastDate !== today) {
     const diff = (new Date(today) - new Date(appData.streak.lastDate)) / 86400000;
     if (diff > 1) { appData.streak.current = 0; DataManager.save(appData); }
   }
+
   TimerManager.init();
   UIManager.refreshDashboard();
   SubjectManager.buildColorPicker();
   NoteManager.populateSubjectFilter();
-  // Generate AI insight after short delay
-  setTimeout(() => AIManager.generateDashInsight(), 1500);
-}
-
-// ══════════════════════════════════
-// STARTUP: check session
-// ══════════════════════════════════
-(function startup() {
-  const session = Auth.getSession();
-  if (session) {
-    Auth.startApp(session.username, session.name);
-  }
-  // else: login screen is already visible
 })();
 </script>
 </body>
